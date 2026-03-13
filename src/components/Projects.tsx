@@ -1,23 +1,53 @@
 import { useState, useRef, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, useMotionValue, useSpring, useTransform, AnimatePresence, useMotionTemplate } from 'motion/react';
-import { Bot, Image as ImageIcon, LayoutDashboard, FolderGit2, X, ArrowRight, Sparkles, Wand2, Zap, Camera, Share2, Cpu } from 'lucide-react';
+import { Bot, Image as ImageIcon, LayoutDashboard, FolderGit2, X, ArrowRight, Sparkles, Wand2, Zap, Camera, Share2, Cpu, ChevronLeft, ChevronRight } from 'lucide-react';
 
 function BeforeAfterSlider({ beforeImage, afterImage }: { beforeImage: string, afterImage: string }) {
+  const containerRef = useRef<HTMLDivElement>(null);
   const foregroundRef = useRef<HTMLDivElement>(null);
   const sliderLineRef = useRef<HTMLDivElement>(null);
+  const [isDragging, setIsDragging] = useState(false);
 
-  const handleMove = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const val = e.target.value;
+  const handleMove = (clientX: number) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const x = Math.max(0, Math.min(clientX - rect.left, rect.width));
+    const percent = (x / rect.width) * 100;
+    
     if (foregroundRef.current) {
-      foregroundRef.current.style.clipPath = `polygon(0 0, ${val}% 0, ${val}% 100%, 0 100%)`;
+      foregroundRef.current.style.clipPath = `polygon(0 0, ${percent}% 0, ${percent}% 100%, 0 100%)`;
     }
     if (sliderLineRef.current) {
-      sliderLineRef.current.style.left = `${val}%`;
+      sliderLineRef.current.style.left = `${percent}%`;
     }
   };
 
+  const onPointerDown = (e: React.PointerEvent) => {
+    setIsDragging(true);
+    handleMove(e.clientX);
+    e.currentTarget.setPointerCapture(e.pointerId);
+  };
+
+  const onPointerMove = (e: React.PointerEvent) => {
+    if (!isDragging) return;
+    handleMove(e.clientX);
+  };
+
+  const onPointerUp = (e: React.PointerEvent) => {
+    setIsDragging(false);
+    e.currentTarget.releasePointerCapture(e.pointerId);
+  };
+
   return (
-    <div className="relative w-full h-full rounded-2xl overflow-hidden select-none group border border-white/10 shadow-xl hover:shadow-[0_0_30px_rgba(0,240,255,0.15)] hover:border-cyan-500/30 transition-all duration-300">
+    <div 
+      ref={containerRef}
+      className="relative w-full h-full rounded-2xl overflow-hidden select-none group border border-white/10 shadow-xl hover:shadow-[0_0_30px_rgba(0,240,255,0.15)] hover:border-cyan-500/30 transition-all duration-300 touch-none cursor-ew-resize"
+      onPointerDown={onPointerDown}
+      onPointerMove={onPointerMove}
+      onPointerUp={onPointerUp}
+      onPointerCancel={onPointerUp}
+    >
       {/* After Image (Background) */}
       <img 
         src={afterImage} 
@@ -25,6 +55,7 @@ function BeforeAfterSlider({ beforeImage, afterImage }: { beforeImage: string, a
         className="absolute inset-0 w-full h-full object-cover pointer-events-none"
         referrerPolicy="no-referrer"
         loading="lazy"
+        draggable={false}
       />
       
       {/* Before Image (Foreground, clipped) */}
@@ -39,6 +70,7 @@ function BeforeAfterSlider({ beforeImage, afterImage }: { beforeImage: string, a
           className="absolute inset-0 w-full h-full object-cover"
           referrerPolicy="no-referrer"
           loading="lazy"
+          draggable={false}
         />
       </div>
 
@@ -56,18 +88,6 @@ function BeforeAfterSlider({ beforeImage, afterImage }: { beforeImage: string, a
         </div>
       </div>
 
-      {/* Invisible Range Input */}
-      <input
-        type="range"
-        min="0"
-        max="100"
-        defaultValue="50"
-        onInput={handleMove}
-        className="absolute inset-0 w-full h-full opacity-0 cursor-ew-resize z-10"
-        style={{ touchAction: 'pan-y' }}
-        aria-label="Comparador de imagens antes e depois"
-      />
-
       {/* Labels */}
       <div className="absolute top-4 left-4 px-3 py-1.5 bg-black/60 backdrop-blur-md rounded-lg text-white text-xs font-mono border border-white/10 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
         Antes
@@ -81,38 +101,33 @@ function BeforeAfterSlider({ beforeImage, afterImage }: { beforeImage: string, a
 
 function DraggableGallery({ images, beforeAfters, orientation = 'vertical' }: { images: string[], beforeAfters?: { before: string, after: string }[], orientation?: 'horizontal' | 'vertical' }) {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [scrollLeft, setScrollLeft] = useState(0);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const totalItems = (beforeAfters?.length || 0) + images.length;
 
-  const onMouseDown = (e: React.MouseEvent) => {
-    setIsDragging(true);
-    setStartX(e.pageX - (scrollRef.current?.offsetLeft || 0));
-    setScrollLeft(scrollRef.current?.scrollLeft || 0);
+  const handleScroll = () => {
+    if (!scrollRef.current) return;
+    const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+    const maxScroll = scrollWidth - clientWidth;
+    const progress = maxScroll > 0 ? scrollLeft / maxScroll : 0;
+    setScrollProgress(progress);
   };
 
-  const onMouseLeave = () => setIsDragging(false);
-  const onMouseUp = () => setIsDragging(false);
-
-  const onMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging) return;
-    e.preventDefault();
-    const x = e.pageX - (scrollRef.current?.offsetLeft || 0);
-    const walk = (x - startX) * 2;
+  const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const progress = parseFloat(e.target.value);
+    setScrollProgress(progress);
     if (scrollRef.current) {
-      scrollRef.current.scrollLeft = scrollLeft - walk;
+      const { scrollWidth, clientWidth } = scrollRef.current;
+      const maxScroll = scrollWidth - clientWidth;
+      scrollRef.current.scrollTo({ left: progress * maxScroll, behavior: 'auto' });
     }
   };
 
   return (
-    <div className="relative w-full">
+    <div className="relative w-full flex flex-col items-center group/gallery">
       <div 
         ref={scrollRef}
-        className="flex gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory cursor-grab active:cursor-grabbing pb-8 pt-4 px-4 sm:px-2 -mx-4 sm:mx-0"
-        onMouseDown={onMouseDown}
-        onMouseLeave={onMouseLeave}
-        onMouseUp={onMouseUp}
-        onMouseMove={onMouseMove}
+        onScroll={handleScroll}
+        className="flex gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory pb-4 pt-4 px-4 sm:px-2 -mx-4 sm:mx-0 w-full"
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}
       >
         {beforeAfters && beforeAfters.map((ba, i) => (
@@ -127,6 +142,7 @@ function DraggableGallery({ images, beforeAfters, orientation = 'vertical' }: { 
               alt={`Galeria ${i + 1}`} 
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 pointer-events-none"
               loading="lazy"
+              draggable={false}
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
                 target.src = `https://placehold.co/720x1280/1a1a1a/00f0ff?text=Imagem+${i + 1}`;
@@ -135,9 +151,51 @@ function DraggableGallery({ images, beforeAfters, orientation = 'vertical' }: { 
           </div>
         ))}
       </div>
+      
+      {/* Custom Slider */}
+      {totalItems > 1 && (
+        <div className="w-full max-w-xs sm:max-w-md mt-6 mb-2 flex flex-col items-center justify-center gap-4">
+          <input
+            type="range"
+            min="0"
+            max="1"
+            step="0.001"
+            value={scrollProgress}
+            onChange={handleSliderChange}
+            className="w-full h-2 bg-white/10 rounded-full appearance-none cursor-pointer outline-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-8 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-cyan-400 [&::-webkit-slider-thumb]:hover:bg-cyan-300 [&::-webkit-slider-thumb]:transition-colors [&::-webkit-slider-thumb]:shadow-[0_0_10px_rgba(0,240,255,0.5)]"
+          />
+          <div className="flex items-center justify-center gap-2">
+            {Array.from({ length: totalItems }).map((_, i) => {
+              // Calculate which item is active based on progress
+              const activeIndex = Math.round(scrollProgress * (totalItems - 1));
+              return (
+                <div 
+                  key={i} 
+                  className={`h-1.5 rounded-full transition-all duration-300 ${i === activeIndex ? 'w-6 bg-cyan-400' : 'w-1.5 bg-white/30'}`}
+                />
+              );
+            })}
+          </div>
+        </div>
+      )}
+      
       <style>{`
-        .cursor-grab::-webkit-scrollbar {
+        .overflow-x-auto::-webkit-scrollbar {
           display: none;
+        }
+        /* Firefox slider thumb */
+        input[type=range]::-moz-range-thumb {
+          width: 32px;
+          height: 12px;
+          border-radius: 9999px;
+          background-color: #22d3ee;
+          border: none;
+          cursor: pointer;
+          transition: background-color 0.2s;
+          box-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+        }
+        input[type=range]::-moz-range-thumb:hover {
+          background-color: #67e8f9;
         }
       `}</style>
     </div>
@@ -253,22 +311,34 @@ function ProjectModal({ project, onClose }: { project: any, onClose: () => void 
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       onClick={onClose}
-      className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-6 bg-black/80 backdrop-blur-md"
+      className="fixed inset-0 z-[100] flex items-center justify-center p-0 sm:p-6 bg-black/95 sm:bg-black/90 backdrop-blur-md"
     >
+      {/* Mobile Floating Close Button */}
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          onClose();
+        }}
+        className="sm:hidden fixed top-4 right-4 w-12 h-12 rounded-full bg-black/80 flex items-center justify-center active:scale-95 transition-all shadow-[0_0_30px_rgba(0,0,0,0.8)] z-[99999] border border-white/20 backdrop-blur-md"
+        aria-label="Fechar modal"
+      >
+        <X className="w-6 h-6 text-white" />
+      </button>
+
       <motion.div
         initial={{ scale: 0.9, opacity: 0, y: 20 }}
         animate={{ scale: 1, opacity: 1, y: 0 }}
         exit={{ scale: 0.9, opacity: 0, y: 20 }}
         onClick={(e) => e.stopPropagation()}
-        className="bg-[#0a0a0a] border border-white/10 rounded-2xl w-full max-w-6xl max-h-[92vh] sm:max-h-[90vh] overflow-y-auto shadow-2xl shadow-cyan-500/10 custom-scrollbar flex flex-col"
+        className="bg-[#0f0f0f] sm:border border-white/10 sm:rounded-2xl w-full h-full sm:h-auto sm:max-w-6xl sm:max-h-[90vh] overflow-y-auto shadow-2xl shadow-cyan-500/10 custom-scrollbar flex flex-col relative"
       >
-        <div className="sticky top-0 bg-[#0a0a0a]/95 backdrop-blur-xl border-b border-white/10 p-4 sm:p-6 flex justify-between items-start sm:items-center z-20 gap-4">
-          <div className="flex items-center gap-3 sm:gap-4">
+        <div className="sticky top-0 bg-[#0f0f0f]/95 backdrop-blur-xl border-b border-white/10 p-4 sm:p-6 flex justify-between items-start sm:items-center z-[60] gap-4">
+          <div className="flex items-center gap-3 sm:gap-4 pr-16 sm:pr-0">
             <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-black/40 flex items-center justify-center border border-white/5 shrink-0">
               <project.icon className="w-5 h-5 sm:w-6 sm:h-6 text-cyan-400" />
             </div>
             <div className="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-3">
-              <h3 className="text-xl sm:text-2xl font-bold text-white leading-tight">{project.title}</h3>
+              <h3 className="text-lg sm:text-2xl font-bold text-white leading-tight">{project.title}</h3>
               {project.beta && (
                 <span className="px-2 py-0.5 sm:px-3 sm:py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-[10px] sm:text-xs font-mono uppercase tracking-wider flex items-center gap-1.5 sm:gap-2 w-fit">
                   <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
@@ -279,7 +349,7 @@ function ProjectModal({ project, onClose }: { project: any, onClose: () => void 
           </div>
           <button
             onClick={onClose}
-            className="w-10 h-10 sm:w-10 sm:h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 hover:text-cyan-400 transition-colors shrink-0 shadow-lg"
+            className="hidden sm:flex w-10 h-10 rounded-full bg-white/10 items-center justify-center hover:bg-white/20 hover:text-cyan-400 transition-colors shrink-0 shadow-lg z-[70]"
             aria-label="Fechar modal"
           >
             <X className="w-5 h-5 sm:w-6 sm:h-6" />
@@ -289,7 +359,7 @@ function ProjectModal({ project, onClose }: { project: any, onClose: () => void 
         <div className="p-5 sm:p-6 md:p-8">
           <div className="flex flex-wrap gap-2 mb-8">
             {project.tech.map((tech: string, i: number) => (
-              <span key={i} className="text-sm font-mono px-4 py-2 rounded-lg bg-white/5 text-cyan-100/70 border border-white/10">
+              <span key={i} className="text-sm font-mono px-4 py-2 rounded-lg bg-white/10 text-cyan-100/90 border border-white/20">
                 {tech}
               </span>
             ))}
@@ -304,7 +374,7 @@ function ProjectModal({ project, onClose }: { project: any, onClose: () => void 
           </div>
 
           {project.status && (
-            <div className="mb-12 bg-cyan-900/10 border border-cyan-500/20 rounded-2xl p-6 sm:p-8">
+            <div className="mb-12 bg-cyan-950/40 border border-cyan-500/30 rounded-2xl p-6 sm:p-8">
               <h4 className="text-xl font-bold mb-4 text-white flex items-center gap-2">
                 <FolderGit2 className="text-cyan-400 w-5 h-5" />
                 Status do Projeto: <span className="text-cyan-400 font-mono text-xs sm:text-sm uppercase tracking-wider ml-2 bg-cyan-500/10 px-3 py-1 rounded-full border border-cyan-500/30">{project.status.label}</span>
@@ -370,8 +440,8 @@ function ProjectModal({ project, onClose }: { project: any, onClose: () => void 
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {project.features.map((feature: any, index: number) => (
-                  <div key={index} className="bg-black/40 p-6 rounded-2xl border border-white/5 hover:border-cyan-500/30 transition-colors group">
-                    <div className="w-12 h-12 rounded-xl bg-cyan-500/10 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-cyan-500/20 transition-all duration-300">
+                  <div key={index} className="bg-black/80 p-6 rounded-2xl border border-white/10 hover:border-cyan-500/40 transition-colors group">
+                    <div className="w-12 h-12 rounded-xl bg-cyan-500/20 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-cyan-500/30 transition-all duration-300">
                       <feature.icon className="w-6 h-6 text-cyan-400" />
                     </div>
                     <h4 className="text-lg font-bold text-white mb-2">{feature.title}</h4>
@@ -487,9 +557,9 @@ function ProjectCard({ project, index, onClick }: { project: any, index: number,
           {project.description}
         </p>
 
-        <div className="flex flex-wrap gap-2 mt-auto pt-6 border-t border-white/5 mb-6" style={{ transform: "translateZ(30px)" }}>
+        <div className="flex flex-wrap gap-2 mt-auto pt-6 border-t border-white/10 mb-6" style={{ transform: "translateZ(30px)" }}>
           {project.tech.map((tech: string, i: number) => (
-            <span key={i} className="text-xs font-mono px-3 py-1.5 rounded-md bg-black/40 text-cyan-100/70 border border-white/5 group-hover:border-white/10 transition-colors">
+            <span key={i} className="text-xs font-mono px-3 py-1.5 rounded-md bg-black/60 text-cyan-100/90 border border-white/10 group-hover:border-white/20 transition-colors">
               {tech}
             </span>
           ))}
@@ -541,8 +611,8 @@ export default function Projects() {
             ))}
           </div>
 
-          <div className="bg-black/40 border border-white/5 rounded-2xl p-6 sm:p-8 text-center max-w-3xl mx-auto">
-            <p className="text-gray-400 text-sm sm:text-base leading-relaxed">
+          <div className="bg-black/80 border border-white/10 rounded-2xl p-6 sm:p-8 text-center max-w-3xl mx-auto">
+            <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
               Estes são alguns dos projetos mais avançados que estou desenvolvendo atualmente. Ao longo do meu aprendizado e experimentação com inteligência artificial e automação, desenvolvi diversos outros projetos e ferramentas, porém estes são os que estão mais estruturados e que posso apresentar publicamente no momento.
             </p>
           </div>

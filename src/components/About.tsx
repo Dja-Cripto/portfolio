@@ -41,6 +41,9 @@ export default function About() {
                     Atualmente concentro meus projetos no desenvolvimento de aplicações utilizando inteligência artificial, automações e ferramentas modernas de desenvolvimento assistido por IA. Busco criar soluções que simplifiquem tarefas, aumentem produtividade e transformem ideias em aplicações reais.
                   </p>
                   <p>
+                    Além dos projetos de automação e inteligência artificial, também desenvolvo aplicações e sites modernos utilizando técnicas de Vibe Coding, criando interfaces interativas, dashboards e experiências digitais completas. Esse site é um exemplo desse tipo de desenvolvimento.
+                  </p>
+                  <p>
                     Além do desenvolvimento tecnológico, também atuo com edição profissional de vídeo e edição de imagens, criando conteúdos visuais e materiais digitais para diferentes projetos e plataformas.
                   </p>
                 </div>
@@ -48,28 +51,28 @@ export default function About() {
 
               {/* Info Cards */}
               <div className="lg:w-80 flex flex-col gap-4">
-                <div className="flex items-start gap-4 bg-black/40 p-5 rounded-2xl border border-white/5 hover:border-purple-500/30 transition-colors group">
-                  <div className="p-3 rounded-xl bg-purple-500/10 group-hover:bg-purple-500/20 transition-colors">
+                <div className="flex items-start gap-4 bg-black/80 p-5 rounded-2xl border border-white/10 hover:border-purple-500/40 transition-colors group">
+                  <div className="p-3 rounded-xl bg-purple-500/20 group-hover:bg-purple-500/30 transition-colors">
                     <MapPin className="text-purple-400 w-6 h-6" />
                   </div>
                   <div>
-                    <p className="text-xs text-gray-500 font-mono uppercase tracking-wider mb-1">Localização</p>
+                    <p className="text-xs text-gray-400 font-mono uppercase tracking-wider mb-1">Localização</p>
                     <p className="font-medium text-gray-200">Brasil</p>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4 bg-black/40 p-5 rounded-2xl border border-white/5 hover:border-cyan-500/30 transition-colors group">
-                  <div className="p-3 rounded-xl bg-cyan-500/10 group-hover:bg-cyan-500/20 transition-colors">
+                <div className="flex items-start gap-4 bg-black/80 p-5 rounded-2xl border border-white/10 hover:border-cyan-500/40 transition-colors group">
+                  <div className="p-3 rounded-xl bg-cyan-500/20 group-hover:bg-cyan-500/30 transition-colors">
                     <Languages className="text-cyan-400 w-6 h-6" />
                   </div>
                   <div>
-                    <p className="text-xs text-gray-500 font-mono uppercase tracking-wider mb-1">Idiomas</p>
+                    <p className="text-xs text-gray-400 font-mono uppercase tracking-wider mb-1">Idiomas</p>
                     <p className="font-medium text-gray-200">Português<br/><span className="text-sm text-gray-400">Inglês (Intermediário)</span></p>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4 bg-black/40 p-5 rounded-2xl border border-white/5 hover:border-emerald-500/30 transition-colors group">
-                  <div className="p-3 rounded-xl bg-emerald-500/10 group-hover:bg-emerald-500/20 transition-colors">
+                <div className="flex items-start gap-4 bg-black/80 p-5 rounded-2xl border border-white/10 hover:border-emerald-500/40 transition-colors group">
+                  <div className="p-3 rounded-xl bg-emerald-500/20 group-hover:bg-emerald-500/30 transition-colors">
                     <Sparkles className="text-emerald-400 w-6 h-6" />
                   </div>
                   <div>

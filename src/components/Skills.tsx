@@ -4,12 +4,12 @@ const skills = [
   { name: "Python", level: 90 },
   { name: "SQL", level: 85 },
   { name: "Cursor AI", level: 95 },
-  { name: "Automation", level: 90 },
-  { name: "AI Tools", level: 95 },
+  { name: "Vibe Coding", level: 90 },
+  { name: "Automação", level: 90 },
+  { name: "Ferramentas de IA", level: 95 },
   { name: "CapCut", level: 80 },
   { name: "DaVinci Resolve", level: 75 },
   { name: "Photoshop", level: 85 },
-  { name: "Excel", level: 80 },
 ];
 
 export default function Skills() {

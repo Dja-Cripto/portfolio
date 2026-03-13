@@ -26,8 +26,8 @@ export default function Contact() {
           </p>
 
           <div className="flex flex-col md:flex-row items-center justify-center gap-6 sm:gap-8 mb-12">
-            <div className="flex flex-col items-center gap-2 text-gray-300 bg-white/5 px-8 py-6 rounded-2xl border border-white/10 hover:border-cyan-500/30 transition-colors w-full sm:w-auto">
-              <div className="w-12 h-12 rounded-full bg-cyan-500/10 flex items-center justify-center mb-2">
+            <div className="flex flex-col items-center gap-2 text-gray-300 bg-black/80 px-8 py-6 rounded-2xl border border-white/10 hover:border-cyan-500/40 transition-colors w-full sm:w-auto">
+              <div className="w-12 h-12 rounded-full bg-cyan-500/20 flex items-center justify-center mb-2">
                 <Mail className="text-cyan-400 w-6 h-6" />
               </div>
               <span className="text-sm text-gray-400 uppercase tracking-wider font-semibold">Email</span>
@@ -38,8 +38,8 @@ export default function Contact() {
             
             <div className="hidden md:block w-1.5 h-1.5 rounded-full bg-purple-500/50" />
             
-            <div className="flex flex-col items-center gap-2 text-gray-300 bg-white/5 px-8 py-6 rounded-2xl border border-white/10 hover:border-purple-500/30 transition-colors w-full sm:w-auto">
-              <div className="w-12 h-12 rounded-full bg-purple-500/10 flex items-center justify-center mb-2">
+            <div className="flex flex-col items-center gap-2 text-gray-300 bg-black/80 px-8 py-6 rounded-2xl border border-white/10 hover:border-purple-500/40 transition-colors w-full sm:w-auto">
+              <div className="w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center mb-2">
                 <MapPin className="text-purple-400 w-6 h-6" />
               </div>
               <span className="text-sm text-gray-400 uppercase tracking-wider font-semibold">Localização</span>
@@ -69,8 +69,10 @@ export default function Contact() {
         </motion.div>
       </div>
       
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-sm text-gray-600 font-mono flex flex-col items-center gap-2">
-        <p>Desenvolvido com IA & Vibe Coding</p>
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-sm text-gray-500 font-mono flex flex-col items-center gap-3 w-full px-6 text-center">
+        <p className="max-w-2xl leading-relaxed">
+          Este portfólio foi desenvolvido por mim utilizando técnicas de Vibe Coding e ferramentas de inteligência artificial para construção de interfaces modernas e interativas.
+        </p>
         <p>© {new Date().getFullYear()} Daniel Jesus Alves.</p>
       </div>
     </section>
