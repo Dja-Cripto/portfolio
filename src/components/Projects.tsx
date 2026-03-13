@@ -313,13 +313,14 @@ function ProjectModal({ project, onClose }: { project: any, onClose: () => void 
       onClick={onClose}
       className="fixed inset-0 z-[100] flex items-center justify-center p-0 sm:p-6 bg-black/95 sm:bg-black/90 backdrop-blur-md"
     >
-      {/* Mobile Floating Close Button */}
+      {/* Mobile Floating Close Button - abaixo da navbar/barra do browser para não ficar escondido */}
       <button
         onClick={(e) => {
           e.stopPropagation();
           onClose();
         }}
-        className="sm:hidden fixed top-4 right-4 w-12 h-12 rounded-full bg-black/80 flex items-center justify-center active:scale-95 transition-all shadow-[0_0_30px_rgba(0,0,0,0.8)] z-[99999] border border-white/20 backdrop-blur-md"
+        className="sm:hidden fixed right-4 w-12 h-12 rounded-full bg-black/90 flex items-center justify-center active:scale-95 transition-all shadow-[0_0_30px_rgba(0,0,0,0.8)] z-[99999] border-2 border-white/30 backdrop-blur-md touch-manipulation"
+        style={{ top: 'max(5rem, calc(env(safe-area-inset-top, 0px) + 3.5rem))' }}
         aria-label="Fechar modal"
       >
         <X className="w-6 h-6 text-white" />

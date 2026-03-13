@@ -3,8 +3,8 @@ import { Mail, MapPin, MessageCircle } from 'lucide-react';
 
 export default function Contact() {
   return (
-    <section id="contact" className="py-24 px-6 relative z-10 min-h-screen flex items-center justify-center">
-      <div className="max-w-3xl mx-auto w-full text-center">
+    <section id="contact" className="py-24 px-6 relative z-10 min-h-screen flex flex-col">
+      <div className="max-w-3xl mx-auto w-full text-center flex-1 flex flex-col justify-center">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -69,11 +69,11 @@ export default function Contact() {
         </motion.div>
       </div>
       
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-sm text-gray-500 font-mono flex flex-col items-center gap-3 w-full px-6 text-center">
+      <div className="mt-auto pt-10 pb-8 sm:pt-12 text-sm text-gray-500 font-mono flex flex-col items-center gap-3 w-full px-6 text-center">
         <p className="max-w-2xl leading-relaxed">
           Este portfólio foi desenvolvido por mim utilizando técnicas de Vibe Coding e ferramentas de inteligência artificial para construção de interfaces modernas e interativas.
         </p>
-        <p>© {new Date().getFullYear()} Daniel Jesus Alves.</p>
+        <p>© {new Date().getFullYear()} Daniel de Jesus Alves.</p>
       </div>
     </section>
   );

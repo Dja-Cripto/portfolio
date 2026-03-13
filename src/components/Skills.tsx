@@ -1,15 +1,15 @@
 import { motion } from 'motion/react';
 
 const skills = [
-  { name: "Python", level: 90 },
-  { name: "SQL", level: 85 },
-  { name: "Cursor AI", level: 95 },
+  { name: "Python", level: 70 },
+  { name: "SQL", level: 80 },
+  { name: "Cursor AI", level: 90 },
   { name: "Vibe Coding", level: 90 },
   { name: "Automação", level: 90 },
   { name: "Ferramentas de IA", level: 95 },
-  { name: "CapCut", level: 80 },
+  { name: "CapCut", level: 75 },
   { name: "DaVinci Resolve", level: 75 },
-  { name: "Photoshop", level: 85 },
+  { name: "Photoshop", level: 90 },
 ];
 
 export default function Skills() {

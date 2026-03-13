@@ -16,7 +16,21 @@ export default function Navbar() {
 
   const scrollTo = (id: string) => {
     setMobileMenuOpen(false);
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    // No mobile, aguarda o menu fechar antes de rolar para evitar que o clique seja perdido
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  };
+
+  const handleMobileNavClick = (id: string) => {
+    setMobileMenuOpen(false);
+    setTimeout(() => {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
   };
 
   return (
@@ -72,17 +86,33 @@ export default function Navbar() {
             exit={{ opacity: 0, height: 0 }}
             className="md:hidden bg-[#0a0a0a]/95 backdrop-blur-xl border-b border-white/10 overflow-hidden"
           >
-            <div className="flex flex-col px-6 py-6 gap-6 text-sm font-mono">
-              <button onClick={() => scrollTo('about')} className="text-left text-gray-300 hover:text-cyan-400 transition-colors text-lg">
+            <div className="flex flex-col px-6 py-6 gap-2 text-sm font-mono">
+              <button
+                type="button"
+                onClick={() => handleMobileNavClick('about')}
+                className="text-left text-gray-300 hover:text-cyan-400 active:text-cyan-400 transition-colors text-lg py-4 min-h-[48px] w-full -mx-2 px-4 rounded-lg touch-manipulation"
+              >
                 <span className="text-cyan-400 mr-2">01.</span> Sobre
               </button>
-              <button onClick={() => scrollTo('projects')} className="text-left text-gray-300 hover:text-cyan-400 transition-colors text-lg">
+              <button
+                type="button"
+                onClick={() => handleMobileNavClick('projects')}
+                className="text-left text-gray-300 hover:text-cyan-400 active:text-cyan-400 transition-colors text-lg py-4 min-h-[48px] w-full -mx-2 px-4 rounded-lg touch-manipulation"
+              >
                 <span className="text-cyan-400 mr-2">02.</span> Projetos
               </button>
-              <button onClick={() => scrollTo('skills')} className="text-left text-gray-300 hover:text-cyan-400 transition-colors text-lg">
+              <button
+                type="button"
+                onClick={() => handleMobileNavClick('skills')}
+                className="text-left text-gray-300 hover:text-cyan-400 active:text-cyan-400 transition-colors text-lg py-4 min-h-[48px] w-full -mx-2 px-4 rounded-lg touch-manipulation"
+              >
                 <span className="text-cyan-400 mr-2">03.</span> Habilidades
               </button>
-              <button onClick={() => scrollTo('contact')} className="text-left text-gray-300 hover:text-cyan-400 transition-colors text-lg">
+              <button
+                type="button"
+                onClick={() => handleMobileNavClick('contact')}
+                className="text-left text-gray-300 hover:text-cyan-400 active:text-cyan-400 transition-colors text-lg py-4 min-h-[48px] w-full -mx-2 px-4 rounded-lg touch-manipulation"
+              >
                 <span className="text-cyan-400 mr-2">04.</span> Contato
               </button>
             </div>

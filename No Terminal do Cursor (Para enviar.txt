@@ -1,0 +1,7 @@
+No Terminal do Cursor (Para enviar a nova estrutura):
+
+git add .
+
+git commit -m "Implementando Serverless Functions para API"
+
+git push origin main

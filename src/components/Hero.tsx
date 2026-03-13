@@ -22,7 +22,7 @@ export default function Hero() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="text-4xl md:text-7xl lg:text-8xl font-extrabold tracking-tighter mb-4 md:mb-6"
         >
-          Daniel Jesus <span className="text-gradient">Alves</span>
+          Daniel de Jesus <span className="text-gradient">Alves</span>
         </motion.h1>
         
         <motion.div
