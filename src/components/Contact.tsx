@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { Mail, MapPin, MessageCircle } from 'lucide-react';
+import { Mail, Linkedin, MessageCircle } from 'lucide-react';
 
 export default function Contact() {
   return (
@@ -25,46 +25,48 @@ export default function Contact() {
             Estou sempre aberto a novas oportunidades, colaborações e projetos desafiadores envolvendo IA e automação. Sinta-se à vontade para entrar em contato.
           </p>
 
-          <div className="flex flex-col md:flex-row items-center justify-center gap-6 sm:gap-8 mb-12">
-            <div className="flex flex-col items-center gap-2 text-gray-300 bg-black/80 px-8 py-6 rounded-2xl border border-white/10 hover:border-cyan-500/40 transition-colors w-full sm:w-auto">
-              <div className="w-12 h-12 rounded-full bg-cyan-500/20 flex items-center justify-center mb-2">
-                <Mail className="text-cyan-400 w-6 h-6" />
-              </div>
-              <span className="text-sm text-gray-400 uppercase tracking-wider font-semibold">Email</span>
-              <a href="mailto:contact@setupdja.website" className="hover:text-cyan-400 transition-colors font-mono text-lg">
-                contact@setupdja.website
-              </a>
-            </div>
-            
-            <div className="hidden md:block w-1.5 h-1.5 rounded-full bg-purple-500/50" />
-            
-            <div className="flex flex-col items-center gap-2 text-gray-300 bg-black/80 px-8 py-6 rounded-2xl border border-white/10 hover:border-purple-500/40 transition-colors w-full sm:w-auto">
-              <div className="w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center mb-2">
-                <MapPin className="text-purple-400 w-6 h-6" />
-              </div>
-              <span className="text-sm text-gray-400 uppercase tracking-wider font-semibold">Localização</span>
-              <span className="font-mono text-lg">Brasil</span>
-            </div>
-          </div>
+          <div className="flex flex-col md:flex-row flex-wrap items-center justify-center gap-4 sm:gap-6 mb-12 px-4">
+            <motion.a
+              href="mailto:contact@setupdja.website"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-cyan-600 text-white font-bold text-base sm:text-lg hover:shadow-[0_0_40px_rgba(8,145,178,0.4)] transition-shadow relative overflow-hidden group w-full sm:w-auto justify-center"
+            >
+              <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+              <Mail className="w-5 h-5 sm:w-6 sm:h-6 relative z-10 group-hover:scale-110 transition-transform" />
+              <span className="relative z-10">Entrar em Contato</span>
+            </motion.a>
 
-          <div className="flex flex-col items-center gap-6 mb-16">
             <motion.a
               href="https://wa.me/5575982414860?text=Ol%C3%A1%20Daniel,%20vi%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar."
               target="_blank"
               rel="noopener noreferrer"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="inline-flex items-center gap-3 px-10 py-5 rounded-full bg-[#25D366] text-white font-bold text-lg hover:shadow-[0_0_40px_rgba(37,211,102,0.4)] transition-shadow relative overflow-hidden group w-full sm:w-auto justify-center"
+              className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-[#25D366] text-white font-bold text-base sm:text-lg hover:shadow-[0_0_40px_rgba(37,211,102,0.4)] transition-shadow relative overflow-hidden group w-full sm:w-auto justify-center"
             >
               <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-              <MessageCircle className="w-6 h-6 relative z-10 group-hover:scale-110 transition-transform" />
+              <MessageCircle className="w-5 h-5 sm:w-6 sm:h-6 relative z-10 group-hover:scale-110 transition-transform" />
               <span className="relative z-10">Falar no WhatsApp</span>
             </motion.a>
 
-            <div className="flex flex-col items-center gap-1 text-sm text-gray-500 font-mono mt-4">
-              <p>Disponível para oportunidades, projetos e colaborações.</p>
-              <p className="opacity-70">Open to opportunities and collaborations.</p>
-            </div>
+            <motion.a
+              href="https://www.linkedin.com/in/daniel-de-jesus-00ab442b5/"
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-[#0A66C2] text-white font-bold text-base sm:text-lg hover:shadow-[0_0_40px_rgba(10,102,194,0.4)] transition-shadow relative overflow-hidden group w-full sm:w-auto justify-center"
+            >
+              <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+              <Linkedin className="w-5 h-5 sm:w-6 sm:h-6 relative z-10 group-hover:scale-110 transition-transform" />
+              <span className="relative z-10">Acessar LinkedIn</span>
+            </motion.a>
+          </div>
+
+          <div className="flex flex-col items-center gap-1 text-sm text-gray-500 font-mono mt-4 mb-16">
+            <p>Disponível para oportunidades, projetos e colaborações.</p>
+            <p className="opacity-70">Open to opportunities and collaborations.</p>
           </div>
         </motion.div>
       </div>
