@@ -1,7 +1,7 @@
-import { useState, useRef, useEffect } from 'react';
-import { createPortal } from 'react-dom';
-import { motion, useMotionValue, useSpring, useTransform, AnimatePresence, useMotionTemplate } from 'motion/react';
-import { Bot, Image as ImageIcon, LayoutDashboard, FolderGit2, X, ArrowRight, Sparkles, Wand2, Zap, Camera, Share2, Cpu, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useState, useRef } from 'react';
+import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from 'motion/react';
+import { Bot, Image as ImageIcon, LayoutDashboard, FolderGit2, X, ArrowRight, Sparkles, Wand2, Zap, Camera, Share2, Cpu } from 'lucide-react';
+import ModalWrapper from './ModalWrapper';
 
 function BeforeAfterSlider({ beforeImage, afterImage }: { beforeImage: string, afterImage: string }) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -166,7 +166,6 @@ function DraggableGallery({ images, beforeAfters, orientation = 'vertical' }: { 
           />
           <div className="flex items-center justify-center gap-2">
             {Array.from({ length: totalItems }).map((_, i) => {
-              // Calculate which item is active based on progress
               const activeIndex = Math.round(scrollProgress * (totalItems - 1));
               return (
                 <div 
@@ -183,7 +182,6 @@ function DraggableGallery({ images, beforeAfters, orientation = 'vertical' }: { 
         .overflow-x-auto::-webkit-scrollbar {
           display: none;
         }
-        /* Firefox slider thumb */
         input[type=range]::-moz-range-thumb {
           width: 32px;
           height: 12px;
@@ -204,22 +202,20 @@ function DraggableGallery({ images, beforeAfters, orientation = 'vertical' }: { 
 
 const projects = [
   {
-    title: "AI Social Content Generator",
+    title: "Chat2 - AI Generator",
     description: "Ferramenta de automação que permite gerar imagens e textos prontos para redes sociais em poucos segundos utilizando inteligência artificial.",
-    fullDescription: "AI Social Content Generator é uma ferramenta de automação que permite gerar imagens e textos prontos para redes sociais em poucos segundos utilizando inteligência artificial.\n\nO sistema funciona através de comandos enviados em Telegram ou WhatsApp, permitindo que o usuário descreva o conteúdo desejado e escolha o formato da imagem.\n\nA ferramenta então gera automaticamente:\n• imagem criada por IA\n• legenda otimizada para redes sociais\n• conteúdo pronto para publicação\n\nO projeto foi pensado para uso rápido em dispositivos móveis, permitindo gerar conteúdo para marketing de forma simples e acessível diretamente pelo celular.",
+    fullDescription: "Chat2 é uma ferramenta de automação que permite gerar imagens e textos prontos para redes sociais em poucos segundos utilizando inteligência artificial.\n\nO sistema funciona através de comandos enviados em Telegram ou WhatsApp, permitindo que o usuário descreva o conteúdo desejado e escolha o formato da imagem.\n\nA ferramenta então gera automaticamente:\n• imagem criada por IA\n• legenda otimizada para redes sociais\n• conteúdo pronto para publicação\n\nO projeto foi pensado para uso rápido em dispositivos móveis, permitindo gerar conteúdo para marketing de forma simples e acessível diretamente pelo celular.",
     tech: ["n8n", "AI APIs", "Telegram Bot", "Automation"],
-    icon: ImageIcon,
+    icon: Bot,
     color: "from-blue-500/20 to-cyan-500/20",
     border: "group-hover:border-cyan-500/50",
     featured: true,
-    images: [
-      "/print1.jpg", 
-      "/print2.jpg", 
-      "/print3.jpg"  
-    ]
+    coverImage: "/capaChat2.png",
+    coverFallback: "/print1.jpg",
+    images: ["/print1.jpg", "/print2.jpg", "/print3.jpg"]
   },
   {
-    title: "SimPost",
+    title: "SimPost (Cast)",
     description: "Aplicativo em desenvolvimento que utiliza inteligência artificial para transformar qualquer foto de produto em um post profissional pronto para redes sociais.",
     fullDescription: "SimPost é um aplicativo em desenvolvimento que utiliza inteligência artificial para transformar qualquer foto de produto em um post profissional pronto para redes sociais.\n\nO usuário simplesmente tira uma foto pelo celular e o sistema gera automaticamente uma versão otimizada para marketing, com melhorias visuais, composição profissional e estilo de anúncio.\n\nO aplicativo foi pensado principalmente para uso em dispositivos móveis, permitindo que qualquer pessoa transforme rapidamente uma foto comum em um criativo visual profissional.",
     tech: ["AI Image Gen", "React", "Node.js", "Automation"],
@@ -228,19 +224,15 @@ const projects = [
     border: "group-hover:border-purple-500/50",
     featured: false,
     beta: true,
+    coverImage: "/capaCast.png",
+    coverFallback: "/simpost-print1.jpg",
     status: {
       label: "Beta Version",
       description: "Lançamento previsto nos próximos meses."
     },
     beforeAfters: [
-      {
-        before: "/simpost-before.jpg",
-        after: "/simpost-after.jpg"
-      },
-      {
-        before: "/simpost-befor2.jpg",
-        after: "/simpost-after2.jpg"
-      }
+      { before: "/simpost-before.jpg", after: "/simpost-after.jpg" },
+      { before: "/simpost-befor2.jpg", after: "/simpost-after2.jpg" }
     ],
     features: [
       { icon: Wand2, title: "Geração automática", desc: "Criativos para anúncios gerados por IA" },
@@ -249,37 +241,26 @@ const projects = [
       { icon: Camera, title: "Uso simples", desc: "Basta uma fotografia do produto" },
       { icon: Share2, title: "Pronto para postar", desc: "Imagens otimizadas para redes sociais" }
     ],
-    images: [
-      "/simpost-print1.jpg",
-      "/simpost-print2.jpg",
-      "/simpost-print3.jpg",
-      "/simpost-print3.1.jpg"
-    ]
+    images: ["/simpost-print1.jpg", "/simpost-print2.jpg", "/simpost-print3.jpg", "/simpost-print3.1.jpg"]
   },
   {
-    title: "AdForge AI",
-    description: "Sistema experimental focado na geração automatizada de anúncios em grande escala utilizando inteligência artificial.",
-    fullDescription: "AdForge AI é um sistema experimental focado na geração automatizada de anúncios em grande escala utilizando inteligência artificial.\n\nO objetivo da ferramenta é permitir a criação de mais de 100 vídeos publicitários em aproximadamente uma hora com apenas um clique, após o processo automatizado.\n\nO sistema funciona através de um dashboard onde o usuário envia:\n• imagem do produto\n• imagem de modelos\n• parâmetros de criação\n\nA inteligência artificial gera diversas variações visuais e, em seguida, transforma essas variações em múltiplos vídeos de anúncios utilizando processamento em GPU.\n\nEste projeto foi desenvolvido para ser utilizado principalmente em computador, através de um dashboard de automação.",
+    title: "Enage AI",
+    description: "Sistema focado na geração automatizada de anúncios em grande escala utilizando inteligência artificial e processamento em GPU.",
+    fullDescription: "Enage AI é um sistema focado na geração automatizada de anúncios em grande escala utilizando inteligência artificial.\n\nO objetivo da ferramenta é permitir a criação de mais de 100 vídeos publicitários em aproximadamente uma hora com apenas um clique, após o processo automatizado.\n\nO sistema funciona através de um dashboard onde o usuário envia:\n• imagem do produto\n• imagem de modelos\n• parâmetros de criação\n\nA inteligência artificial gera diversas variações visuais e, em seguida, transforma essas variações em múltiplos vídeos de anúncios utilizando processamento em GPU.\n\nEste projeto foi desenvolvido para ser utilizado principalmente em computador, através de um dashboard de automação.",
     tech: ["React", "Node.js", "GPU Processing", "AI Automation"],
     icon: LayoutDashboard,
     color: "from-emerald-500/20 to-teal-500/20",
     border: "group-hover:border-emerald-500/50",
     featured: false,
     beta: true,
-    imageOrientation: 'horizontal',
+    coverImage: "/capaEnage.png",
+    coverFallback: "/ugc-print1.jpg",
+    imageOrientation: 'horizontal' as const,
     status: {
       label: "Early Beta",
       description: "Projeto em desenvolvimento inicial.",
-      current: [
-        "dashboard inicial criado",
-        "planejamento da automação",
-        "APIs já integradas"
-      ],
-      next: [
-        "criação das automações",
-        "início dos testes de geração",
-        "otimização do fluxo de produção de anúncios"
-      ]
+      current: ["dashboard inicial criado", "planejamento da automação", "APIs já integradas"],
+      next: ["criação das automações", "início dos testes de geração", "otimização do fluxo de produção de anúncios"]
     },
     features: [
       { icon: Zap, title: "Geração automatizada", desc: "Criativos gerados de forma automática" },
@@ -288,291 +269,222 @@ const projects = [
       { icon: Cpu, title: "Processamento GPU", desc: "Alta performance na geração" },
       { icon: LayoutDashboard, title: "Larga escala", desc: "Criação de mais de 100 anúncios" }
     ],
-    images: [
-      "/ugc-print1.jpg",
-      "/ugc-print2.jpg",
-      "/ugc-print3.jpg",
-      "/ugc-print4.jpg"
-    ]
+    images: ["/ugc-print1.jpg", "/ugc-print2.jpg", "/ugc-print3.jpg", "/ugc-print4.jpg"]
   }
 ];
 
-function ProjectModal({ project, onClose }: { project: any, onClose: () => void }) {
-  useEffect(() => {
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.body.style.overflow = 'auto';
-    };
-  }, []);
-
+function ProjectModal({ project, isOpen, onClose }: { project: any, isOpen: boolean, onClose: () => void }) {
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      onClick={onClose}
-      className="fixed inset-0 z-[100] flex items-center justify-center p-0 sm:p-6 bg-black/95 sm:bg-black/90 backdrop-blur-md"
-    >
-      {/* Mobile Floating Close Button - abaixo da navbar/barra do browser para não ficar escondido */}
-      <button
-        onClick={(e) => {
-          e.stopPropagation();
-          onClose();
-        }}
-        className="sm:hidden fixed right-4 w-12 h-12 rounded-full bg-black/90 flex items-center justify-center active:scale-95 transition-all shadow-[0_0_30px_rgba(0,0,0,0.8)] z-[99999] border-2 border-white/30 backdrop-blur-md touch-manipulation"
-        style={{ top: 'max(5rem, calc(env(safe-area-inset-top, 0px) + 3.5rem))' }}
-        aria-label="Fechar modal"
-      >
-        <X className="w-6 h-6 text-white" />
-      </button>
-
-      <motion.div
-        initial={{ scale: 0.9, opacity: 0, y: 20 }}
-        animate={{ scale: 1, opacity: 1, y: 0 }}
-        exit={{ scale: 0.9, opacity: 0, y: 20 }}
-        onClick={(e) => e.stopPropagation()}
-        className="bg-[#0f0f0f] sm:border border-white/10 sm:rounded-2xl w-full h-full sm:h-auto sm:max-w-6xl sm:max-h-[90vh] overflow-y-auto shadow-2xl shadow-cyan-500/10 custom-scrollbar flex flex-col relative"
-      >
-        <div className="sticky top-0 bg-[#0f0f0f]/95 backdrop-blur-xl border-b border-white/10 p-4 sm:p-6 flex justify-between items-start sm:items-center z-[60] gap-4">
-          <div className="flex items-center gap-3 sm:gap-4 pr-16 sm:pr-0">
-            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-black/40 flex items-center justify-center border border-white/5 shrink-0">
-              <project.icon className="w-5 h-5 sm:w-6 sm:h-6 text-cyan-400" />
+    <ModalWrapper isOpen={isOpen} onClose={onClose}>
+      <div className="bg-[#0f0f0f] w-full flex flex-col relative font-sans">
+        <div className="relative w-full h-[40vw] min-h-[250px] max-h-[500px] overflow-hidden">
+          <img 
+            src={project.coverImage} 
+            alt={project.title} 
+            className="w-full h-full object-cover opacity-60"
+            onError={(e) => {
+              const img = e.target as HTMLImageElement;
+              if (project.coverFallback && img.src !== window.location.origin + project.coverFallback) {
+                img.src = project.coverFallback;
+              } else {
+                img.src = `https://placehold.co/1200x500/111827/00f0ff?text=${project.title}`;
+              }
+            }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0f0f0f] via-[#0f0f0f]/40 to-transparent" />
+          
+          <div className="absolute bottom-0 left-0 p-8 md:p-12 w-full">
+            <div className="flex items-center gap-3 mb-4">
+               <div className="w-12 h-12 rounded-xl bg-cyan-500/20 flex items-center justify-center border border-cyan-500/30">
+                  <project.icon className="w-6 h-6 text-cyan-400" />
+               </div>
+               {project.beta && (
+                  <span className="px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-mono uppercase tracking-wider flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+                    Beta
+                  </span>
+               )}
             </div>
-            <div className="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-3">
-              <h3 className="text-lg sm:text-2xl font-bold text-white leading-tight">{project.title}</h3>
-              {project.beta && (
-                <span className="px-2 py-0.5 sm:px-3 sm:py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-[10px] sm:text-xs font-mono uppercase tracking-wider flex items-center gap-1.5 sm:gap-2 w-fit">
-                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
-                  Beta
-                </span>
-              )}
-            </div>
+            <h3 className="text-3xl md:text-5xl font-black text-white tracking-tighter uppercase mb-4">{project.title}</h3>
           </div>
-          <button
-            onClick={onClose}
-            className="hidden sm:flex w-10 h-10 rounded-full bg-white/10 items-center justify-center hover:bg-white/20 hover:text-cyan-400 transition-colors shrink-0 shadow-lg z-[70]"
-            aria-label="Fechar modal"
-          >
-            <X className="w-5 h-5 sm:w-6 sm:h-6" />
-          </button>
         </div>
 
-        <div className="p-5 sm:p-6 md:p-8">
-          <div className="flex flex-wrap gap-2 mb-8">
+        <div className="p-8 md:p-16 space-y-16">
+          <div className="flex flex-wrap gap-2">
             {project.tech.map((tech: string, i: number) => (
-              <span key={i} className="text-sm font-mono px-4 py-2 rounded-lg bg-white/10 text-cyan-100/90 border border-white/20">
+              <span key={i} className="text-xs font-mono px-4 py-2 rounded-lg bg-white/5 text-cyan-100/70 border border-white/10">
                 {tech}
               </span>
             ))}
           </div>
 
-          <div className="prose prose-invert max-w-none mb-12">
-            {project.fullDescription.split('\n\n').map((paragraph: string, i: number) => (
-              <p key={i} className="text-gray-300 text-base sm:text-lg leading-relaxed mb-4 whitespace-pre-line">
-                {paragraph}
-              </p>
-            ))}
-          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
+            <div className="lg:col-span-3 prose prose-invert max-w-none">
+              <p className="text-xs font-bold uppercase tracking-widest text-cyan-500 mb-6 font-mono">Sobre o Projeto</p>
+              {project.fullDescription.split('\n\n').map((paragraph: string, i: number) => (
+                <p key={i} className="text-gray-300 text-lg sm:text-xl leading-relaxed mb-6 whitespace-pre-line font-light">
+                  {paragraph}
+                </p>
+              ))}
+            </div>
 
-          {project.status && (
-            <div className="mb-12 bg-cyan-950/40 border border-cyan-500/30 rounded-2xl p-6 sm:p-8">
-              <h4 className="text-xl font-bold mb-4 text-white flex items-center gap-2">
-                <FolderGit2 className="text-cyan-400 w-5 h-5" />
-                Status do Projeto: <span className="text-cyan-400 font-mono text-xs sm:text-sm uppercase tracking-wider ml-2 bg-cyan-500/10 px-3 py-1 rounded-full border border-cyan-500/30">{project.status.label}</span>
-              </h4>
-              <p className="text-gray-300 mb-6 text-sm sm:text-base">{project.status.description}</p>
-              
-              {(project.status.current || project.status.next) && (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {project.status.current && (
-                    <div>
-                      <h5 className="text-white font-semibold mb-3 flex items-center gap-2 text-sm sm:text-base">
-                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                        Atualmente já existe:
-                      </h5>
-                      <ul className="space-y-2">
-                        {project.status.current.map((item: string, i: number) => (
-                          <li key={i} className="text-gray-400 text-sm flex items-start gap-2">
-                            <span className="text-emerald-500/50 mt-0.5">✓</span> {item}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                  {project.status.next && (
-                    <div>
-                      <h5 className="text-white font-semibold mb-3 flex items-center gap-2 text-sm sm:text-base">
-                        <div className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
-                        Os próximos passos incluem:
-                      </h5>
-                      <ul className="space-y-2">
-                        {project.status.next.map((item: string, i: number) => (
-                          <li key={i} className="text-gray-400 text-sm flex items-start gap-2">
-                            <span className="text-cyan-500/50 mt-0.5">→</span> {item}
-                          </li>
-                        ))}
-                      </ul>
+            {project.status && (
+              <div className="lg:col-span-2 space-y-8">
+                <div className="bg-white/5 border border-white/10 rounded-3xl p-8">
+                  <h4 className="text-lg font-bold mb-6 text-white flex items-center gap-2">
+                    <FolderGit2 className="text-cyan-400 w-5 h-5" />
+                    Status: <span className="text-cyan-400 font-mono text-xs uppercase tracking-wider ml-2">{project.status.label}</span>
+                  </h4>
+                  {(project.status.current || project.status.next) && (
+                    <div className="space-y-6">
+                      {project.status.current && (
+                        <div>
+                          <p className="text-white text-sm font-bold mb-3 uppercase tracking-tighter">Concluído:</p>
+                          <ul className="space-y-2">
+                            {project.status.current.map((item: string, i: number) => (
+                              <li key={i} className="text-gray-400 text-sm flex items-start gap-2">
+                                <span className="text-emerald-500/50 mt-0.5">✓</span> {item}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                      {project.status.next && (
+                        <div>
+                          <p className="text-white text-sm font-bold mb-3 uppercase tracking-tighter">Próximos passos:</p>
+                          <ul className="space-y-2">
+                            {project.status.next.map((item: string, i: number) => (
+                              <li key={i} className="text-gray-400 text-sm flex items-start gap-2">
+                                <span className="text-cyan-500/50 mt-0.5">→</span> {item}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>
-              )}
-            </div>
-          )}
-
-          {(project.images?.length > 0 || project.beforeAfters?.length > 0) && (
-            <div className="mb-12">
-              <h4 className="text-2xl font-bold mb-6 flex items-center gap-3 text-white">
-                <ImageIcon className="text-cyan-400 w-6 h-6" />
-                Galeria do Projeto
-              </h4>
-              <DraggableGallery images={project.images || []} beforeAfters={project.beforeAfters} orientation={project.imageOrientation} />
-              <p className="text-center text-sm text-gray-500 mt-4 font-mono flex items-center justify-center gap-2">
-                <Sparkles className="w-4 h-4 text-cyan-400" />
-                Arraste para os lados para ver mais imagens.
-              </p>
-            </div>
-          )}
+              </div>
+            )}
+          </div>
 
           {project.features && (
-            <div className="mb-12">
-              <h4 className="text-2xl font-bold mb-6 flex items-center gap-3 text-white">
-                <Wand2 className="text-cyan-400 w-6 h-6" />
-                Funcionalidades do Aplicativo
-              </h4>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="space-y-8">
+              <p className="text-xs font-bold uppercase tracking-widest text-cyan-500 font-mono">Funcionalidades</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {project.features.map((feature: any, index: number) => (
-                  <div key={index} className="bg-black/80 p-6 rounded-2xl border border-white/10 hover:border-cyan-500/40 transition-colors group">
-                    <div className="w-12 h-12 rounded-xl bg-cyan-500/20 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-cyan-500/30 transition-all duration-300">
+                  <div key={index} className="bg-white/[0.03] p-8 rounded-[2rem] border border-white/5 hover:border-cyan-500/30 transition-all group">
+                    <div className="w-12 h-12 rounded-2xl bg-cyan-500/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                       <feature.icon className="w-6 h-6 text-cyan-400" />
                     </div>
-                    <h4 className="text-lg font-bold text-white mb-2">{feature.title}</h4>
-                    <p className="text-sm text-gray-400">{feature.desc}</p>
+                    <h4 className="text-xl font-bold text-white mb-2">{feature.title}</h4>
+                    <p className="text-gray-400 leading-relaxed font-light">{feature.desc}</p>
                   </div>
                 ))}
               </div>
             </div>
           )}
+
+          {(project.images?.length > 0 || project.beforeAfters?.length > 0) && (
+            <div className="space-y-10">
+               <p className="text-xs font-bold uppercase tracking-widest text-cyan-500 font-mono">Visualização & Galeria</p>
+              <DraggableGallery images={project.images || []} beforeAfters={project.beforeAfters} orientation={project.imageOrientation} />
+            </div>
+          )}
+
+          <div className="border-t border-white/10 pt-12 flex flex-col sm:flex-row items-center justify-between gap-6">
+            <p className="text-sm text-gray-500 font-mono">© {new Date().getFullYear()} — {project.title} Case Research</p>
+            <button onClick={onClose} className="flex items-center gap-2 text-sm font-bold text-white hover:text-cyan-400 transition-colors uppercase tracking-widest">Fechar Case <X className="w-4 h-4" /></button>
+          </div>
         </div>
-      </motion.div>
-    </motion.div>
+      </div>
+    </ModalWrapper>
   );
 }
 
 function ProjectCard({ project, index, onClick }: { project: any, index: number, onClick: () => void }) {
   const ref = useRef<HTMLDivElement>(null);
-  
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-  
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
 
   const mouseXSpring = useSpring(x, { stiffness: 300, damping: 30 });
   const mouseYSpring = useSpring(y, { stiffness: 300, damping: 30 });
 
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["15deg", "-15deg"]);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-15deg", "15deg"]);
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["10deg", "-10deg"]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-10deg", "10deg"]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!ref.current) return;
     const rect = ref.current.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-    const clientX = e.clientX - rect.left;
-    const clientY = e.clientY - rect.top;
-    
-    // For 3D rotation
-    const xPct = clientX / width - 0.5;
-    const yPct = clientY / height - 0.5;
+    const xPct = (e.clientX - rect.left) / rect.width - 0.5;
+    const yPct = (e.clientY - rect.top) / rect.height - 0.5;
     x.set(xPct);
     y.set(yPct);
-    
-    // For spotlight
-    mouseX.set(clientX);
-    mouseY.set(clientY);
   };
 
   const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
+    x.set(0); y.set(0);
   };
 
   return (
-    <div style={{ perspective: 1000 }} className="h-full group cursor-pointer" onClick={onClick}>
-      <div className="h-full transition-transform duration-300 group-hover:scale-[1.02] group-hover:-translate-y-1 rounded-2xl">
-        <motion.div
-          ref={ref}
-          onMouseMove={handleMouseMove}
-          onMouseLeave={handleMouseLeave}
-          style={{
-            rotateX,
-            rotateY,
-            transformStyle: "preserve-3d",
-          }}
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: index * 0.1 }}
-          className={`glass-panel rounded-2xl p-8 relative transition-all duration-300 border ${project.featured ? 'border-cyan-500/30 shadow-[0_0_30px_rgba(0,240,255,0.1)]' : 'border-white/5'} ${project.border} flex flex-col h-full group-hover:shadow-[0_10px_40px_-10px_rgba(0,240,255,0.2)] overflow-hidden`}
-        >
-        {/* Spotlight effect */}
-        <motion.div
-          className="pointer-events-none absolute -inset-px rounded-2xl opacity-0 transition duration-300 group-hover:opacity-100"
-          style={{
-            background: useMotionTemplate`
-              radial-gradient(
-                600px circle at ${mouseX}px ${mouseY}px,
-                rgba(0, 240, 255, 0.1),
-                transparent 40%
-              )
-            `,
-          }}
-        />
-
-        <div 
-          className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl -z-10`} 
-          style={{ transform: "translateZ(-10px)" }}
-        />
-        
-        <div className="flex justify-between items-start mb-6" style={{ transform: "translateZ(40px)" }}>
-          <div className="w-14 h-14 rounded-xl bg-black/40 flex items-center justify-center group-hover:bg-black/60 transition-colors border border-white/5">
-            <project.icon className="w-7 h-7 text-cyan-400 group-hover:text-white transition-colors" />
-          </div>
-          {project.featured && (
-            <div className="px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-mono flex items-center gap-1">
-              <Sparkles className="w-3 h-3" /> Destaque
-            </div>
-          )}
-          {project.beta && !project.featured && (
-            <div className="px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-400 text-xs font-mono flex items-center gap-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse" /> Beta
-            </div>
-          )}
+    <div style={{ perspective: 1500 }} className="h-full group cursor-pointer" onClick={onClick}>
+      <motion.div
+        ref={ref}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, delay: index * 0.1 }}
+        className={`relative h-full glass-panel rounded-[2rem] p-6 border ${project.featured ? 'border-cyan-500/30 shadow-[0_0_30px_rgba(0,240,255,0.05)]' : 'border-white/5'} flex flex-col overflow-hidden transition-all duration-500 hover:shadow-[0_20px_50px_-10px_rgba(0,240,255,0.15)]`}
+      >
+        <div className="relative w-full h-48 mb-6 rounded-2xl overflow-hidden bg-gray-900 border border-white/5">
+           <img 
+            src={project.coverImage} 
+            alt={project.title} 
+            className="w-full h-full object-cover opacity-70 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" 
+            onError={(e) => {
+              const img = e.target as HTMLImageElement;
+              if (project.coverFallback && img.src !== window.location.origin + project.coverFallback) {
+                img.src = project.coverFallback;
+              } else {
+                img.src = `https://placehold.co/600x400/111827/00f0ff?text=${project.title}`;
+              }
+            }}
+           />
+           <div className="absolute inset-0 bg-gradient-to-t from-gray-950/80 to-transparent" />
+           <div className="absolute bottom-4 left-4">
+              <div className="w-10 h-10 rounded-xl bg-black/60 backdrop-blur-md flex items-center justify-center border border-white/10">
+                 <project.icon className="w-5 h-5 text-cyan-400" />
+              </div>
+           </div>
         </div>
 
-        <h3 className="text-2xl font-bold mb-4 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-gray-400 transition-all" style={{ transform: "translateZ(30px)" }}>
-          {project.title}
-        </h3>
+        <div className="flex justify-between items-start mb-3">
+          <h3 className="text-2xl font-black text-white tracking-tighter uppercase leading-tight">{project.title}</h3>
+          {project.featured && (
+            <div className="px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-[10px] font-bold uppercase tracking-widest shrink-0 ml-2">Destaque</div>
+          )}
+        </div>
         
-        <p className="text-gray-400 mb-8 flex-grow leading-relaxed" style={{ transform: "translateZ(20px)" }}>
+        <p className="text-gray-400 mb-6 flex-grow leading-relaxed font-light line-clamp-3 text-sm">
           {project.description}
         </p>
 
-        <div className="flex flex-wrap gap-2 mt-auto pt-6 border-t border-white/10 mb-6" style={{ transform: "translateZ(30px)" }}>
-          {project.tech.map((tech: string, i: number) => (
-            <span key={i} className="text-xs font-mono px-3 py-1.5 rounded-md bg-black/60 text-cyan-100/90 border border-white/10 group-hover:border-white/20 transition-colors">
+        <div className="flex flex-wrap gap-2 mb-6">
+          {project.tech.slice(0, 3).map((tech: string, i: number) => (
+            <span key={i} className="text-[10px] font-mono px-2.5 py-1 rounded-md bg-white/5 text-gray-400 border border-white/10">
               {tech}
             </span>
           ))}
         </div>
 
-        {/* CTA Button */}
-        <div className="mt-auto flex items-center gap-2 text-cyan-400 font-mono text-sm uppercase tracking-wider group-hover:text-cyan-300 transition-colors" style={{ transform: "translateZ(40px)" }}>
-          <span className="font-bold">Expandir detalhes</span>
-          <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform" />
+        <div className="flex items-center gap-2 text-cyan-400 font-bold text-xs uppercase tracking-widest">
+           <span>Ver detalhes</span>
+           <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
         </div>
-        </motion.div>
-      </div>
+      </motion.div>
     </div>
   );
 }
@@ -581,27 +493,29 @@ export default function Projects() {
   const [selectedProject, setSelectedProject] = useState<any>(null);
 
   return (
-    <section id="projects" className="py-24 px-6 relative z-10 min-h-screen flex items-center">
-      <div className="max-w-6xl mx-auto w-full">
+    <section id="projects" className="py-16 lg:py-24 px-6 relative z-10">
+      <div className="max-w-7xl mx-auto w-full">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
         >
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-12 sm:mb-16">
-            <div className="flex items-center gap-4">
-              <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold flex items-center gap-3 sm:gap-4 shrink-0">
-                <span className="text-cyan-400 font-mono text-xl sm:text-2xl md:text-4xl">02.</span> Projetos
+          {/* ── Header ── */}
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12 lg:mb-16">
+            <div className="flex-1">
+              <motion.span initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} className="text-cyan-500 font-mono text-xs uppercase tracking-[0.3em] mb-4 block">02 — Portfolio</motion.span>
+              <h2 className="text-4xl md:text-7xl lg:text-8xl font-black text-white tracking-tighter leading-none uppercase">
+                Selected<br /><span className="text-transparent" style={{ WebkitTextStroke: '2px rgba(255,255,255,0.1)' }}>Projects.</span>
               </h2>
-              <div className="h-[1px] bg-white/10 flex-grow hidden sm:block ml-4" />
             </div>
-            <p className="text-cyan-400/80 font-mono text-sm sm:text-base shrink-0">
-              Building AI tools and automation experiments.
+            <p className="text-gray-500 text-lg max-w-sm leading-relaxed font-light border-l border-white/10 pl-8">
+              Projetos reais: automação, produto com IA e interfaces que suportam operação — do protótipo ao fluxo em produção.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+          {/* ── Project Cards Grid ── */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mb-12 lg:mb-16">
             {projects.map((project, index) => (
               <ProjectCard 
                 key={index} 
@@ -612,22 +526,28 @@ export default function Projects() {
             ))}
           </div>
 
-          <div className="bg-black/80 border border-white/10 rounded-2xl p-6 sm:p-8 text-center max-w-3xl mx-auto">
-            <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
-              Estes são alguns dos projetos mais avançados que estou desenvolvendo atualmente. Ao longo do meu aprendizado e experimentação com inteligência artificial e automação, desenvolvi diversos outros projetos e ferramentas, porém estes são os que estão mais estruturados e que posso apresentar publicamente no momento.
-            </p>
+          {/* ── Vision Quote ── */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center bg-white/[0.02] border border-white/5 rounded-[2.5rem] p-10 md:p-16">
+             <div className="space-y-6">
+                <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-mono uppercase tracking-widest">
+                   Vision & Research
+                </span>
+                <p className="text-2xl md:text-3xl font-light text-gray-300 leading-relaxed italic">
+                  "Quero que time e cliente enxerguem resultado rápido: menos clique manual, mais dado útil e produto que responde."
+                </p>
+             </div>
+             <div className="text-gray-500 leading-relaxed font-light text-lg">
+                Cada case mistura decisão de arquitetura, integração e interface — sempre com o olho no que o usuário final precisa fazer em menos passos.
+             </div>
           </div>
         </motion.div>
       </div>
 
-      <AnimatePresence>
-        {selectedProject && (
-          <ProjectModal 
-            project={selectedProject} 
-            onClose={() => setSelectedProject(null)} 
-          />
-        )}
-      </AnimatePresence>
+      <ProjectModal 
+        project={selectedProject ?? projects[0]} 
+        isOpen={!!selectedProject}
+        onClose={() => setSelectedProject(null)} 
+      />
     </section>
   );
 }
