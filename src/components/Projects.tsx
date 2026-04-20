@@ -493,8 +493,8 @@ export default function Projects() {
   const [selectedProject, setSelectedProject] = useState<any>(null);
 
   return (
-    <section id="projects" className="py-16 lg:py-24 px-6 relative z-10">
-      <div className="max-w-7xl mx-auto w-full">
+    <section id="projects" className="py-16 lg:py-32 px-6 relative z-10">
+      <div className="max-w-[1440px] mx-auto w-full">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -502,16 +502,19 @@ export default function Projects() {
           transition={{ duration: 0.8 }}
         >
           {/* ── Header ── */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12 lg:mb-16">
-            <div className="flex-1">
+          <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-8 lg:gap-16 items-end mb-16 lg:mb-24">
+            <div className="space-y-4">
               <motion.span initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} className="text-cyan-500 font-mono text-xs uppercase tracking-[0.3em] mb-4 block">Portfolio</motion.span>
-              <h2 className="text-4xl md:text-7xl lg:text-8xl font-black text-white tracking-tighter leading-none uppercase">
-                Selected<br /><span className="text-transparent" style={{ WebkitTextStroke: '2px rgba(255,255,255,0.1)' }}>Projects.</span>
+              <h2 className="text-4xl md:text-7xl lg:text-8xl xl:text-9xl font-black text-white tracking-tighter leading-none uppercase">
+                Selected<br /><span className="text-transparent" style={{ WebkitTextStroke: '1.5px rgba(255,255,255,0.15)' }}>Projects.</span>
               </h2>
             </div>
-            <p className="text-gray-500 text-lg max-w-sm leading-relaxed font-light border-l border-white/10 pl-8">
-              Projetos reais: automação, produto com IA e interfaces que suportam operação — do protótipo ao fluxo em produção.
-            </p>
+            <div className="space-y-6 border-l border-white/10 pl-8 pb-2">
+              <p className="text-gray-400 text-lg md:text-xl lg:text-2xl leading-relaxed font-light">
+                Projetos reais: automação, produto com IA e interfaces que suportam operação — do protótipo ao fluxo em produção.
+              </p>
+              <div className="h-px w-24 bg-cyan-500/30" />
+            </div>
           </div>
 
           {/* ── Project Cards Grid ── */}
@@ -527,16 +530,20 @@ export default function Projects() {
           </div>
 
           {/* ── Vision Quote ── */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center bg-white/[0.02] border border-white/5 rounded-[2.5rem] p-10 md:p-16">
-             <div className="space-y-6">
-                <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-mono uppercase tracking-widest">
+          <div className="grid grid-cols-1 lg:grid-cols-[1.3fr_0.7fr] gap-12 items-center bg-white/[0.02] border border-white/5 rounded-[2.5rem] p-10 md:p-20 relative overflow-hidden group/vision">
+             {/* Decorative glow inside */}
+             <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-500/5 rounded-full blur-[100px] pointer-events-none group-hover/vision:bg-cyan-500/10 transition-colors duration-1000" />
+             
+             <div className="space-y-8 relative z-10">
+                <span className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-mono uppercase tracking-[0.2em]">
+                   <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
                    Vision & Research
                 </span>
-                <p className="text-2xl md:text-3xl font-light text-gray-300 leading-relaxed italic">
+                <p className="text-3xl md:text-4xl xl:text-5xl font-light text-gray-200 leading-tight italic tracking-tight">
                   "Quero que time e cliente enxerguem resultado rápido: menos clique manual, mais dado útil e produto que responde."
                 </p>
              </div>
-             <div className="text-gray-500 leading-relaxed font-light text-lg">
+             <div className="text-gray-500 leading-relaxed font-light text-lg md:text-xl xl:text-2xl border-l lg:border-l-0 lg:border-t border-white/10 pt-8 lg:pt-12 relative z-10 mt-8 lg:mt-0">
                 Cada case mistura decisão de arquitetura, integração e interface — sempre com o olho no que o usuário final precisa fazer em menos passos.
              </div>
           </div>
