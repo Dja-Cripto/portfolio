@@ -20,7 +20,7 @@ export default function DesignAbout() {
           viewport={{ once: true }}
           className="text-orange-500 font-bold tracking-widest uppercase text-xs mb-6"
         >
-          01 — Sobre Mim
+          Sobre Mim
         </motion.p>
 
         <div className="rounded-3xl border border-orange-200/80 bg-white/70 backdrop-blur-sm p-6 md:p-10 mb-16 shadow-sm">

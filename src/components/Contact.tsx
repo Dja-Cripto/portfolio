@@ -13,7 +13,6 @@ export default function Contact() {
         >
           {/* Section number */}
           <div className="flex items-center gap-4 mb-8">
-            <span className="text-cyan-400 font-mono text-xl sm:text-2xl md:text-3xl">04.</span>
             <div className="h-[1px] bg-gradient-to-r from-white/10 to-transparent flex-grow" />
           </div>
 

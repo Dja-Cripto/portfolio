@@ -504,7 +504,7 @@ export default function Projects() {
           {/* ── Header ── */}
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12 lg:mb-16">
             <div className="flex-1">
-              <motion.span initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} className="text-cyan-500 font-mono text-xs uppercase tracking-[0.3em] mb-4 block">02 — Portfolio</motion.span>
+              <motion.span initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} className="text-cyan-500 font-mono text-xs uppercase tracking-[0.3em] mb-4 block">Portfolio</motion.span>
               <h2 className="text-4xl md:text-7xl lg:text-8xl font-black text-white tracking-tighter leading-none uppercase">
                 Selected<br /><span className="text-transparent" style={{ WebkitTextStroke: '2px rgba(255,255,255,0.1)' }}>Projects.</span>
               </h2>

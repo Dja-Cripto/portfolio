@@ -25,7 +25,7 @@ export default function DesignSkills() {
           viewport={{ once: true }}
           className="text-orange-500 font-bold tracking-widest uppercase text-xs mb-6"
         >
-          03 — Toolkit
+          Toolkit
         </motion.p>
 
         <div className="flex flex-col lg:flex-row justify-between items-start gap-16 mb-20">

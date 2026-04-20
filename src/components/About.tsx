@@ -21,7 +21,7 @@ export default function About() {
         >
           <div className="flex items-center gap-3 sm:gap-4 mb-8 sm:mb-12">
             <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold flex items-center gap-3 sm:gap-4">
-              <span className="text-cyan-400 font-mono text-xl sm:text-2xl md:text-4xl">01.</span> Sobre Mim
+              Sobre Mim
             </h2>
             <div className="h-[1px] bg-white/10 flex-grow ml-2 sm:ml-4" />
           </div>

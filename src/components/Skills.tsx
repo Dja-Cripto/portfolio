@@ -22,7 +22,7 @@ export default function Skills() {
         >
           <div className="flex items-center gap-4 mb-16">
             <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold flex items-center gap-4">
-              <span className="text-cyan-400 font-mono text-xl sm:text-2xl md:text-4xl">03.</span> Habilidades
+              Habilidades
             </h2>
             <div className="h-[1px] bg-gradient-to-r from-white/10 to-transparent flex-grow ml-4" />
           </div>

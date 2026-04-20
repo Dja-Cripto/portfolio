@@ -72,16 +72,16 @@ export default function Navbar({ mode = 'programming' }: { mode?: 'programming' 
         {/* Desktop Links */}
         <div className={`hidden md:flex items-center gap-8 ${isDesign ? 'font-sans text-sm font-medium' : 'font-mono text-sm'}`}>
           <button onClick={() => scrollTo('about')} className={`transition-colors ${isDesign ? 'text-gray-600 hover:text-black' : 'text-gray-400 hover:text-cyan-400'}`}>
-            {isDesign ? '' : <span className="text-cyan-400">01. </span>}Sobre
+            Sobre
           </button>
           <button onClick={() => scrollTo('projects')} className={`transition-colors ${isDesign ? 'text-gray-600 hover:text-black' : 'text-gray-400 hover:text-cyan-400'}`}>
-            {isDesign ? '' : <span className="text-cyan-400">02. </span>}Projetos
+            Projetos
           </button>
           <button onClick={() => scrollTo('skills')} className={`transition-colors ${isDesign ? 'text-gray-600 hover:text-black' : 'text-gray-400 hover:text-cyan-400'}`}>
-            {isDesign ? '' : <span className="text-cyan-400">03. </span>}Habilidades
+            Habilidades
           </button>
           <button onClick={() => scrollTo('contact')} className={`transition-colors ${isDesign ? 'text-gray-600 hover:text-black' : 'text-gray-400 hover:text-cyan-400'}`}>
-            {isDesign ? '' : <span className="text-cyan-400">04. </span>}Contato
+            Contato
           </button>
         </div>
 
@@ -109,28 +109,28 @@ export default function Navbar({ mode = 'programming' }: { mode?: 'programming' 
                 onClick={() => handleMobileNavClick('about')}
                 className={`text-left transition-colors text-lg py-4 min-h-[48px] w-full -mx-2 px-4 rounded-lg touch-manipulation ${isDesign ? 'text-gray-700 hover:bg-gray-50' : 'text-gray-300 hover:text-cyan-400'}`}
               >
-                {isDesign ? '' : <span className="text-cyan-400 mr-2">01.</span>} Sobre
+                Sobre
               </button>
               <button
                 type="button"
                 onClick={() => handleMobileNavClick('projects')}
                 className={`text-left transition-colors text-lg py-4 min-h-[48px] w-full -mx-2 px-4 rounded-lg touch-manipulation ${isDesign ? 'text-gray-700 hover:bg-gray-50' : 'text-gray-300 hover:text-cyan-400'}`}
               >
-                {isDesign ? '' : <span className="text-cyan-400 mr-2">02.</span>} Projetos
+                Projetos
               </button>
               <button
                 type="button"
                 onClick={() => handleMobileNavClick('skills')}
                 className={`text-left transition-colors text-lg py-4 min-h-[48px] w-full -mx-2 px-4 rounded-lg touch-manipulation ${isDesign ? 'text-gray-700 hover:bg-gray-50' : 'text-gray-300 hover:text-cyan-400'}`}
               >
-                {isDesign ? '' : <span className="text-cyan-400 mr-2">03.</span>} Habilidades
+                Habilidades
               </button>
               <button
                 type="button"
                 onClick={() => handleMobileNavClick('contact')}
                 className={`text-left transition-colors text-lg py-4 min-h-[48px] w-full -mx-2 px-4 rounded-lg touch-manipulation ${isDesign ? 'text-gray-700 hover:bg-gray-50' : 'text-gray-300 hover:text-cyan-400'}`}
               >
-                {isDesign ? '' : <span className="text-cyan-400 mr-2">04.</span>} Contato
+                Contato
               </button>
             </div>
           </motion.div>

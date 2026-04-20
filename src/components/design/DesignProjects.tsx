@@ -387,8 +387,6 @@ function FeaturedCaseCard({ project, onClick }: { project: any; onClick: () => v
         <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12 flex flex-col md:flex-row md:items-end justify-between gap-6 font-sans">
           <div>
             <div className="flex items-center gap-3 mb-4">
-              <span className="text-3xl md:text-5xl lg:text-6xl font-black text-gray-700 tracking-tighter leading-none">{project.num}</span>
-              <div className="w-px h-12 bg-white/10" />
               <span className={`px-3 py-1 rounded-full border text-xs font-bold uppercase tracking-widest ${badgeBg}`}>{project.category.split('/')[0].trim()}</span>
             </div>
             <h4 className="text-2xl md:text-4xl lg:text-5xl font-black text-white tracking-tighter mb-3 leading-none">{project.client}</h4>
@@ -412,7 +410,7 @@ export default function DesignProjects() {
   return (
     <section id="projects" className="py-32 px-8 md:px-16 lg:px-24 relative z-10 bg-white font-sans">
       <div className="max-w-7xl mx-auto">
-        <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-orange-500 font-bold tracking-widest uppercase text-xs mb-6">02 — Projetos Selecionados</motion.p>
+        <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-orange-500 font-bold tracking-widest uppercase text-xs mb-6">Projetos Selecionados</motion.p>
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
           <h3 className="text-3xl sm:text-5xl md:text-7xl font-black text-gray-950 tracking-tighter leading-[1] uppercase">Selected<br /><span className="text-transparent" style={{ WebkitTextStroke: '2px #d1d5db' }}>Works.</span></h3>
           <p className="text-gray-500 text-lg max-w-xs leading-relaxed font-light">Cases reais de branding, social media e direção criativa.</p>

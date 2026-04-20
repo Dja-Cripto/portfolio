@@ -23,7 +23,7 @@ export default function DesignContact() {
           viewport={{ once: true }}
           className="text-orange-600 font-bold tracking-widest uppercase text-xs mb-8"
         >
-          04 — Contato
+          Contato
         </motion.p>
 
         {/* Giant headline */}
