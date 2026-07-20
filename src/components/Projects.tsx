@@ -213,7 +213,7 @@ const projects = [
     coverImage: "/capa-curriculo-dash.png",
     coverFallback: "/capa-curriculo-dash.png",
     playLink: "https://dashdoemprego.vercel.app/",
-    githubLink: "https://github.com/Dja-Cripto",
+    githubLink: "https://github.com/Dja-Cripto/dashdoemprego",
     images: []
   }
 ];
