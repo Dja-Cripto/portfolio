@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { MapPin, Languages, Terminal, Cpu, Sparkles, Workflow, Database, LayoutTemplate } from 'lucide-react';
+import { MapPin, Languages, Terminal, Cpu, Sparkles, Workflow, Database, LayoutTemplate, GraduationCap } from 'lucide-react';
 
 const oQueFaco = [
   'Aplicativos e sistemas web sob medida (interfaces modernas, painéis e fluxos reais de uso).',
@@ -70,6 +70,16 @@ export default function About() {
                     </div>
                   </div>
 
+                  <div className="flex items-start gap-4 bg-black/80 p-6 rounded-2xl border border-white/10 hover:border-amber-500/40 transition-colors group">
+                    <div className="p-3 rounded-xl bg-amber-500/20 group-hover:bg-amber-500/30 transition-colors">
+                      <GraduationCap className="text-amber-400 w-6 h-6" />
+                    </div>
+                    <div>
+                      <p className="text-xs text-gray-400 font-mono uppercase tracking-wider mb-1">Educação</p>
+                      <p className="font-medium text-gray-200 leading-tight">Análise e Desenvolvimento de Sistemas<br /><span className="text-sm text-gray-400">Ensino Superior</span></p>
+                    </div>
+                  </div>
+
                   <div className="flex items-start gap-4 bg-black/80 p-6 rounded-2xl border border-white/10 hover:border-emerald-500/40 transition-colors group">
                     <div className="p-4 rounded-xl bg-emerald-500/20 group-hover:bg-emerald-500/30 transition-colors">
                       <Sparkles className="text-emerald-400 w-6 h-6" />
@@ -109,7 +119,7 @@ export default function About() {
 
                   <div className="prose prose-invert max-w-none text-gray-300 text-base sm:text-xl leading-relaxed space-y-6 lg:space-y-8 font-light">
                     <p>
-                      Sou desenvolvedor com forte interesse em produto digital, inteligência artificial aplicada e automação. Já atuei em atendimento, marketing e conteúdo — experiências que me deram senso de prazo, clareza na comunicação com cliente e visão de negócio ao propor soluções técnicas.
+                      Atualmente cursando a faculdade de <strong className="text-white font-black uppercase tracking-tight">Análise e Desenvolvimento de Sistemas</strong>, sou desenvolvedor com forte interesse em produto digital, inteligência artificial aplicada e automação. Já atuei em atendimento, marketing e conteúdo — experiências que me deram senso de prazo, clareza na comunicação com cliente e visão de negócio ao propor soluções técnicas.
                     </p>
                     <p>
                       Hoje concentro entregas em <strong className="text-white font-black uppercase tracking-tight">aplicações e painéis</strong>, <strong className="text-white font-black uppercase tracking-tight">automações para empresas</strong> (fluxos, integrações, bots) e <strong className="text-white font-black uppercase tracking-tight">camada de dados</strong>: SQL para estruturar e consultar informação, Power BI para tornar isso legível para decisões. Uso stack web moderna e ferramentas de desenvolvimento assistido por IA com disciplina de revisão e testes — este portfólio é um exemplo vivo desse tipo de entrega.

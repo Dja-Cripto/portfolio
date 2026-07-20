@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { Mail, Linkedin, MessageCircle, ArrowUpRight } from 'lucide-react';
+import { Mail, Linkedin, MessageCircle, ArrowUpRight, Github } from 'lucide-react';
 
 export default function Contact() {
   return (
@@ -83,6 +83,18 @@ export default function Contact() {
                   >
                     <Linkedin className="w-5 h-5" />
                     LinkedIn profissional
+                  </motion.a>
+
+                  <motion.a
+                    href="https://github.com/Dja-Cripto"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="flex items-center gap-4 px-8 py-5 rounded-2xl bg-white/[0.03] border border-white/10 text-gray-300 font-medium text-lg hover:bg-white/[0.08] transition-all justify-center"
+                  >
+                    <Github className="w-5 h-5" />
+                    GitHub
                   </motion.a>
 
                   <div className="pt-4 text-center">

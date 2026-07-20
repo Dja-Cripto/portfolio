@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from 'motion/react';
-import { Bot, Image as ImageIcon, LayoutDashboard, FolderGit2, X, ArrowRight, Sparkles, Wand2, Zap, Camera, Share2, Cpu } from 'lucide-react';
+import { Bot, Image as ImageIcon, LayoutDashboard, FolderGit2, X, ArrowRight, Sparkles, Wand2, Zap, Camera, Share2, Cpu, Gamepad2, Github } from 'lucide-react';
 import ModalWrapper from './ModalWrapper';
 
 function BeforeAfterSlider({ beforeImage, afterImage }: { beforeImage: string, afterImage: string }) {
@@ -202,74 +202,19 @@ function DraggableGallery({ images, beforeAfters, orientation = 'vertical' }: { 
 
 const projects = [
   {
-    title: "Chat2 - AI Generator",
-    description: "Ferramenta de automação que permite gerar imagens e textos prontos para redes sociais em poucos segundos utilizando inteligência artificial.",
-    fullDescription: "Chat2 é uma ferramenta de automação que permite gerar imagens e textos prontos para redes sociais em poucos segundos utilizando inteligência artificial.\n\nO sistema funciona através de comandos enviados em Telegram ou WhatsApp, permitindo que o usuário descreva o conteúdo desejado e escolha o formato da imagem.\n\nA ferramenta então gera automaticamente:\n• imagem criada por IA\n• legenda otimizada para redes sociais\n• conteúdo pronto para publicação\n\nO projeto foi pensado para uso rápido em dispositivos móveis, permitindo gerar conteúdo para marketing de forma simples e acessível diretamente pelo celular.",
-    tech: ["n8n", "AI APIs", "Telegram Bot", "Automation"],
-    icon: Bot,
-    color: "from-blue-500/20 to-cyan-500/20",
-    border: "group-hover:border-cyan-500/50",
+    title: "Currículo Dash",
+    description: "Um divertido jogo interativo no estilo runner desenvolvido com HTML, CSS e JavaScript puro. O jogador corre coletando experiências profissionais e desviando de fantasmas de RH e placas de vagas fechadas.",
+    fullDescription: "O Currículo Dash é um jogo interativo no estilo runner desenvolvido de forma independente utilizando a stack web pura (HTML5, CSS3 e JavaScript). Criado em apenas dois dias com o auxílio de inteligência artificial, o projeto tem como objetivo apresentar a trajetória e o currículo do desenvolvedor de maneira gamificada e engajadora.\n\nO jogador controla um personagem que corre por uma cidade pixelizada, coletando pastas de 'Experiência' e desviando de obstáculos cotidianos do mercado de trabalho, como 'Fantasmas do RH' e placas de 'Vaga Fechada'.\n\nPrincipais destaques do projeto:\n• Desenvolvido em apenas 2 dias com o apoio de ferramentas de IA para agilização do código e design.\n• Visual nostálgico em pixel art e jogabilidade fluida diretamente no navegador.\n• Uma abordagem criativa e inovadora para apresentar o currículo profissional.\n• Integração direta com redes sociais (LinkedIn) e plataformas de emprego dentro do próprio fluxo do jogo.",
+    tech: ["HTML5", "CSS3", "JavaScript", "AI Assisted Dev"],
+    icon: FolderGit2,
+    color: "from-yellow-500/20 to-amber-500/20",
+    border: "group-hover:border-yellow-500/50",
     featured: true,
-    coverImage: "/capaChat2.png",
-    coverFallback: "/print1.jpg",
-    images: ["/print1.jpg", "/print2.jpg", "/print3.jpg"]
-  },
-  {
-    title: "SimPost (Cast)",
-    description: "Aplicativo em desenvolvimento que utiliza inteligência artificial para transformar qualquer foto de produto em um post profissional pronto para redes sociais.",
-    fullDescription: "SimPost é um aplicativo em desenvolvimento que utiliza inteligência artificial para transformar qualquer foto de produto em um post profissional pronto para redes sociais.\n\nO usuário simplesmente tira uma foto pelo celular e o sistema gera automaticamente uma versão otimizada para marketing, com melhorias visuais, composição profissional e estilo de anúncio.\n\nO aplicativo foi pensado principalmente para uso em dispositivos móveis, permitindo que qualquer pessoa transforme rapidamente uma foto comum em um criativo visual profissional.",
-    tech: ["AI Image Gen", "React", "Node.js", "Automation"],
-    icon: Wand2,
-    color: "from-purple-500/20 to-pink-500/20",
-    border: "group-hover:border-purple-500/50",
-    featured: false,
-    beta: true,
-    coverImage: "/capaCast.png",
-    coverFallback: "/simpost-print1.jpg",
-    status: {
-      label: "Beta Version",
-      description: "Lançamento previsto nos próximos meses."
-    },
-    beforeAfters: [
-      { before: "/simpost-before.jpg", after: "/simpost-after.jpg" },
-      { before: "/simpost-befor2.jpg", after: "/simpost-after2.jpg" }
-    ],
-    features: [
-      { icon: Wand2, title: "Geração automática", desc: "Criativos para anúncios gerados por IA" },
-      { icon: Sparkles, title: "Melhoria visual", desc: "Aprimoramento automático de produtos" },
-      { icon: Zap, title: "Criação rápida", desc: "Conteúdo para marketing em segundos" },
-      { icon: Camera, title: "Uso simples", desc: "Basta uma fotografia do produto" },
-      { icon: Share2, title: "Pronto para postar", desc: "Imagens otimizadas para redes sociais" }
-    ],
-    images: ["/simpost-print1.jpg", "/simpost-print2.jpg", "/simpost-print3.jpg", "/simpost-print3.1.jpg"]
-  },
-  {
-    title: "Enage AI",
-    description: "Sistema focado na geração automatizada de anúncios em grande escala utilizando inteligência artificial e processamento em GPU.",
-    fullDescription: "Enage AI é um sistema focado na geração automatizada de anúncios em grande escala utilizando inteligência artificial.\n\nO objetivo da ferramenta é permitir a criação de mais de 100 vídeos publicitários em aproximadamente uma hora com apenas um clique, após o processo automatizado.\n\nO sistema funciona através de um dashboard onde o usuário envia:\n• imagem do produto\n• imagem de modelos\n• parâmetros de criação\n\nA inteligência artificial gera diversas variações visuais e, em seguida, transforma essas variações em múltiplos vídeos de anúncios utilizando processamento em GPU.\n\nEste projeto foi desenvolvido para ser utilizado principalmente em computador, através de um dashboard de automação.",
-    tech: ["React", "Node.js", "GPU Processing", "AI Automation"],
-    icon: LayoutDashboard,
-    color: "from-emerald-500/20 to-teal-500/20",
-    border: "group-hover:border-emerald-500/50",
-    featured: false,
-    beta: true,
-    coverImage: "/capaEnage.png",
-    coverFallback: "/ugc-print1.jpg",
-    imageOrientation: 'horizontal' as const,
-    status: {
-      label: "Early Beta",
-      description: "Projeto em desenvolvimento inicial.",
-      current: ["dashboard inicial criado", "planejamento da automação", "APIs já integradas"],
-      next: ["criação das automações", "início dos testes de geração", "otimização do fluxo de produção de anúncios"]
-    },
-    features: [
-      { icon: Zap, title: "Geração automatizada", desc: "Criativos gerados de forma automática" },
-      { icon: ImageIcon, title: "Múltiplas variações", desc: "Diversas versões de anúncios" },
-      { icon: Wand2, title: "Vídeos publicitários", desc: "Automação de criação de vídeos" },
-      { icon: Cpu, title: "Processamento GPU", desc: "Alta performance na geração" },
-      { icon: LayoutDashboard, title: "Larga escala", desc: "Criação de mais de 100 anúncios" }
-    ],
-    images: ["/ugc-print1.jpg", "/ugc-print2.jpg", "/ugc-print3.jpg", "/ugc-print4.jpg"]
+    coverImage: "/capa-curriculo-dash.png",
+    coverFallback: "/capa-curriculo-dash.png",
+    playLink: "https://dashdoemprego.vercel.app/",
+    githubLink: "https://github.com/Dja-Cripto",
+    images: []
   }
 ];
 
@@ -319,13 +264,46 @@ function ProjectModal({ project, isOpen, onClose }: { project: any, isOpen: bool
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
-            <div className="lg:col-span-3 prose prose-invert max-w-none">
-              <p className="text-xs font-bold uppercase tracking-widest text-cyan-500 mb-6 font-mono">Sobre o Projeto</p>
-              {project.fullDescription.split('\n\n').map((paragraph: string, i: number) => (
-                <p key={i} className="text-gray-300 text-lg sm:text-xl leading-relaxed mb-6 whitespace-pre-line font-light">
-                  {paragraph}
-                </p>
-              ))}
+            <div className="lg:col-span-3 prose prose-invert max-w-none flex flex-col gap-8">
+              <div>
+                <p className="text-xs font-bold uppercase tracking-widest text-cyan-500 mb-6 font-mono">Sobre o Projeto</p>
+                {project.fullDescription.split('\n\n').map((paragraph: string, i: number) => (
+                  <p key={i} className="text-gray-300 text-lg sm:text-xl leading-relaxed mb-6 whitespace-pre-line font-light">
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
+
+              {(project.playLink || project.githubLink) && (
+                <div className="flex flex-wrap gap-4">
+                  {project.playLink && (
+                    <motion.a
+                      href={project.playLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="inline-flex items-center gap-2.5 px-6 py-4 rounded-2xl bg-gradient-to-r from-yellow-500 to-amber-500 text-black font-black text-sm tracking-wider uppercase shadow-[0_0_30px_rgba(245,158,11,0.2)] hover:shadow-[0_0_40px_rgba(245,158,11,0.4)] transition-all"
+                    >
+                      <Gamepad2 className="w-5 h-5" />
+                      Jogar Jogo / Acessar
+                    </motion.a>
+                  )}
+                  {project.githubLink && (
+                    <motion.a
+                      href={project.githubLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="inline-flex items-center gap-2.5 px-6 py-4 rounded-2xl bg-white/10 border border-white/20 text-white hover:bg-white/20 font-bold text-sm tracking-wider uppercase transition-all"
+                    >
+                      <Github className="w-5 h-5" />
+                      Repositório GitHub
+                    </motion.a>
+                  )}
+                </div>
+              )}
             </div>
 
             {project.status && (
@@ -518,14 +496,15 @@ export default function Projects() {
           </div>
 
           {/* ── Project Cards Grid ── */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mb-12 lg:mb-16">
+          <div className={`${projects.length === 1 ? 'flex justify-center' : 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8'} mb-12 lg:mb-16`}>
             {projects.map((project, index) => (
-              <ProjectCard 
-                key={index} 
-                project={project} 
-                index={index} 
-                onClick={() => setSelectedProject(project)}
-              />
+              <div key={index} className={projects.length === 1 ? 'w-full max-w-2xl' : ''}>
+                <ProjectCard 
+                  project={project} 
+                  index={index} 
+                  onClick={() => setSelectedProject(project)}
+                />
+              </div>
             ))}
           </div>
 
