@@ -74,7 +74,7 @@ function InvestolqCase({ onClose }: { onClose: () => void }) {
             <div className="gallery-stack"><figure><img src="/investolq-dashboard.png" alt="Painel de acompanhamento do Investolq" /><figcaption>01 — Painel de operação</figcaption></figure><figure><img src="/investolq-agenda.png" alt="Agenda semanal do Investolq" /><figcaption>02 — Agenda inteligente</figcaption></figure><figure><img src="/investolq-n8n.png" alt="Fluxo de automação no n8n" /><figcaption>03 — Orquestração n8n</figcaption></figure></div>
           </section>
           <section className="stack-marquee" aria-label="Tecnologias utilizadas">{investolq.tech.map((tech) => <span key={tech}>{tech}</span>)}</section>
-          <footer className="case-footer"><p>Case desenvolvido por Daniel de Jesus Alves · {investolq.year}</p><button onClick={onClose}>Fechar case <X /></button></footer>
+          <footer className="case-footer"><p>Case desenvolvido por Daniel de Jesus · {investolq.year}</p><button onClick={onClose}>Fechar case <X /></button></footer>
         </div>
       </article>
     </ModalWrapper>
@@ -88,7 +88,7 @@ function StandardCase({ project, onClose }: { project: Project; onClose: () => v
         <header className="case-hero compact-hero"><img src={project.coverImage} alt={project.title} /><div className="case-hero-shade" /><div className="case-hero-copy"><span className="terminal-kicker">// selected_work</span><h2>{project.title}</h2></div></header>
         <div className="case-body"><div className="case-intro-grid"><div><span className="terminal-kicker">Sobre o projeto</span><h3>Ideia rápida.<br /><span>Execução afiada.</span></h3></div><div className="case-prose">{project.fullDescription.split('\n\n').map((p) => <p key={p}>{p}</p>)}</div></div>
           <div className="project-actions">{project.playLink && <a href={project.playLink} target="_blank" rel="noreferrer"><Gamepad2 /> Jogar agora <ArrowUpRight /></a>}{project.githubLink && <a className="secondary" href={project.githubLink} target="_blank" rel="noreferrer"><Github /> Ver código <ArrowUpRight /></a>}</div>
-          <section className="stack-marquee">{project.tech.map((tech) => <span key={tech}>{tech}</span>)}</section><footer className="case-footer"><p>Case desenvolvido por Daniel de Jesus Alves · {project.year}</p><button onClick={onClose}>Fechar case <X /></button></footer>
+          <section className="stack-marquee">{project.tech.map((tech) => <span key={tech}>{tech}</span>)}</section><footer className="case-footer"><p>Case desenvolvido por Daniel de Jesus · {project.year}</p><button onClick={onClose}>Fechar case <X /></button></footer>
         </div>
       </article>
     </ModalWrapper>
