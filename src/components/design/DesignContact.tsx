@@ -106,7 +106,7 @@ export default function DesignContact() {
 
       {/* Footer */}
       <div className="mt-24 pt-10 border-t border-white/50 text-sm text-gray-400 font-light flex flex-col items-center gap-2 w-full text-center relative z-10">
-        <p>© {new Date().getFullYear()} Daniel de Jesus Alves — Design Visual & Direção Criativa</p>
+        <p>© {new Date().getFullYear()} Daniel de Jesus — Design Visual & Direção Criativa</p>
       </div>
     </section>
   );

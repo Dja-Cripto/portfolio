@@ -16,6 +16,16 @@ export default function DesignHero({ startTransition }: DesignHeroProps) {
       className="relative min-h-screen overflow-hidden font-sans flex flex-col"
       style={{ background: 'linear-gradient(135deg, #fff0e8 0%, #fce4ec 40%, #ede7f6 100%)' }}
     >
+      <div className="design-mode-nav">
+        <a href="#hero" aria-label="Início">DJA</a>
+        <nav aria-label="Navegação do portfólio de design">
+          <a href="#about">Sobre</a>
+          <a href="#projects">Projetos</a>
+          <a href="#skills">Toolkit</a>
+          <a href="#contact">Contato</a>
+          <button onClick={(e) => startTransition('programming', e)}><Code2/><span>Modo Programação</span></button>
+        </nav>
+      </div>
       {/* —— ORGANIC BLOB SHAPES (NO particles, NO wireframe, NO tech) —— */}
       <motion.div
         animate={{ x: [0, 60, 0], y: [0, -40, 0], scale: [1, 1.15, 1], rotate: [0, 15, 0] }}
@@ -85,21 +95,6 @@ export default function DesignHero({ startTransition }: DesignHeroProps) {
             }}
           >
             de Jesus
-          </motion.h1>
-        </div>
-        <div className="overflow-hidden mb-12">
-          <motion.h1
-            initial={{ y: '100%' }}
-            animate={{ y: 0 }}
-            transition={{ duration: 1, ease: [0.76, 0, 0.24, 1], delay: 0.3 }}
-            className="text-[clamp(2rem,10vw,11rem)] font-black tracking-tighter leading-[0.85]"
-            style={{
-              background: 'linear-gradient(90deg, #f97316 0%, #ec4899 50%, #8b5cf6 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-            }}
-          >
-            Alves.
           </motion.h1>
         </div>
 
@@ -175,6 +170,7 @@ export default function DesignHero({ startTransition }: DesignHeroProps) {
           <span className="text-white font-black text-sm">DJA</span>
         </div>
       </motion.div>
+      <div className="design-accent-line" />
     </section>
   );
 }

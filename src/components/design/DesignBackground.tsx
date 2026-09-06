@@ -22,6 +22,8 @@ export default function DesignBackground() {
           backgroundSize: '28px 28px',
         }}
       />
+      <div className="design-polish-grid" />
+      <div className="design-grain" />
     </div>
   );
 }
