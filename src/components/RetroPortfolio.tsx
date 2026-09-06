@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { motion, useScroll, useSpring } from 'motion/react';
-import { ArrowDownRight, ArrowRight, Asterisk, Award, Braces, BriefcaseBusiness, CheckCircle2, Code2, Download, Github, GraduationCap, Linkedin, Mail, MapPin, MessageCircle, Palette, Play, Sparkles, Terminal, Workflow } from 'lucide-react';
+import { AnimatePresence, motion, useScroll, useSpring } from 'motion/react';
+import { ArrowDownRight, ArrowRight, Asterisk, Award, Braces, BriefcaseBusiness, Check, CheckCircle2, Code2, Download, Github, GraduationCap, Linkedin, Mail, MapPin, MessageCircle, Palette, RotateCcw, Sparkles, Terminal, Workflow } from 'lucide-react';
 import Projects from './Projects';
 
 const typedWords = ['produtos digitais.', 'automações inteligentes.', 'painéis de dados.', 'sistemas que trabalham.'];
@@ -32,19 +32,19 @@ const credentials = [
   ['n8n + IA', 'Automações e fluxos inteligentes · 2026'],
 ];
 
-const codeSamples = [
-  { label: '2 + 2', code: 'const resultado = 2 + 2;', output: '4' },
-  { label: 'saudação', code: 'saudar("visitante");', output: 'Olá! Bem-vindo ao meu portfólio.' },
-  { label: 'stack', code: 'daniel.stack.filter(ativa);', output: 'React · Python · SQL · n8n · IA' },
+type BuildStatus='idle'|'processing'|'success'|'ready';
+const buildSteps=[
+  {prompt:'COMPLETE THE FLOW',nodes:['DATA',null,'OUTPUT'],options:['API','DATABASE','PROCESS'],correct:'PROCESS'},
+  {prompt:'WHAT COMES NEXT?',nodes:['USER','UI',null,'DATABASE'],options:['API','SERVER','DESIGN'],correct:'API'},
 ];
 
 function CodePlayground(){
-  const [selected,setSelected]=useState(0);
-  const [output,setOutput]=useState('Pronto para executar.');
-  const [running,setRunning]=useState(false);
-  const run=()=>{setRunning(true);setOutput('executando...');window.setTimeout(()=>{setOutput(codeSamples[selected].output);setRunning(false)},420)};
-  const choose=(index:number)=>{setSelected(index);setOutput('Pressione EXECUTAR para ver o resultado.');};
-  return <div className="code-playground" aria-label="Laboratório de código interativo"><div className="code-lab-bar"><span><i/> PLAYGROUND.JS</span><small>INTERATIVO</small></div><div className="code-presets" aria-label="Escolha um código">{codeSamples.map((sample,index)=><button key={sample.label} className={selected===index?'active':''} onClick={()=>choose(index)}>{sample.label}</button>)}</div><div className="code-screen"><span>01</span><code>{codeSamples[selected].code}</code></div><button className="run-code" onClick={run} disabled={running}><Play/>{running?'EXECUTANDO':'EXECUTAR CÓDIGO'}</button><div className="code-output"><span>SAÍDA</span><strong>{output}</strong></div></div>;
+  const[step,setStep]=useState(0);const[status,setStatus]=useState<BuildStatus>('idle');const[inserted,setInserted]=useState<string|null>(null);const[wrong,setWrong]=useState<string|null>(null);const timers=useRef<number[]>([]);const current=buildSteps[step];
+  useEffect(()=>()=>timers.current.forEach(window.clearTimeout),[]);
+  const choose=(option:string)=>{if(status!=='idle')return;if(option!==current.correct){setWrong(option);timers.current.push(window.setTimeout(()=>setWrong(null),650));return}setWrong(null);setInserted(option);setStatus('processing');timers.current.push(window.setTimeout(()=>setStatus('success'),1450));timers.current.push(window.setTimeout(()=>{if(step===buildSteps.length-1){setStatus('ready')}else{setStep(step+1);setInserted(null);setStatus('idle')}},2450))};
+  const reset=()=>{timers.current.forEach(window.clearTimeout);timers.current=[];setStep(0);setStatus('idle');setInserted(null);setWrong(null)};
+  const active=status==='processing'||status==='success';
+  return <div className={`code-playground build-system ${status}`} aria-label="Build the System — experiência interativa"><div className="code-lab-bar"><span><i/> BUILD THE SYSTEM</span><small>{status==='ready'?'ONLINE':`STEP 0${step+1}/02`}</small></div><AnimatePresence mode="wait">{status==='ready'?<motion.div key="ready" className="system-ready" initial={{opacity:0,scale:.96}} animate={{opacity:1,scale:1}}><div className="ready-mark"><Check/></div><span>SYSTEM READY</span><div className="ready-list">{['DEVELOPMENT','AUTOMATION','DATA','DESIGN'].map(item=><div key={item}><b>{item}</b><Check/></div>)}</div><button onClick={()=>document.getElementById('projects')?.scrollIntoView({behavior:'smooth'})}>EXPLORE PROJECTS <ArrowRight/></button><button className="system-reset" onClick={reset}><RotateCcw/> RESTART SYSTEM</button></motion.div>:<motion.div key={step} className="build-stage" initial={{opacity:0,x:12}} animate={{opacity:1,x:0}} exit={{opacity:0,x:-12}}><div className="build-instruction"><strong>{current.prompt}</strong><span>Choose the missing piece</span></div><div className={`system-flow ${active?'active':''}`}>{current.nodes.map((node,index)=><div className="flow-part" key={`${step}-${index}`}>{index>0&&<div className="flow-line"><i/><i/><i/></div>}<motion.div className={`flow-node ${node?'':'missing'} ${!node&&inserted?'inserted':''}`} animate={!node&&inserted?{scale:[.78,1.08,1],boxShadow:['0 0 0 rgba(140,255,58,0)','0 0 28px rgba(140,255,58,.42)','0 0 10px rgba(140,255,58,.16)']}:undefined}>{node||inserted||'?'}</motion.div></div>)}</div><div className="piece-label">SELECT A MODULE</div><div className="build-options">{current.options.map(option=><motion.button key={option} onClick={()=>choose(option)} disabled={status!=='idle'} className={`${wrong===option?'wrong':''} ${inserted===option?'correct':''}`} animate={wrong===option?{x:[0,-5,5,-3,3,0]}:undefined}>{option}</motion.button>)}</div><div className="build-feedback" aria-live="polite">{wrong?<span className="try-again">MODULE INCOMPATIBLE · TRY AGAIN</span>:status==='processing'?<div className="processing-row"><span>PROCESSING...</span><div><motion.i initial={{width:0}} animate={{width:'100%'}} transition={{duration:1.25,ease:'linear'}}/></div><b>100%</b></div>:status==='success'?<motion.span className="complete-label" initial={{opacity:0,y:5}} animate={{opacity:1,y:0}}><Check/> SYSTEM COMPLETE</motion.span>:<span>SELECT ONE OPTION TO CONTINUE</span>}</div></motion.div>}</AnimatePresence></div>;
 }
 
 function Header({onDesign}:{onDesign:()=>void}){const[open,setOpen]=useState(false);const go=(id:string)=>{setOpen(false);document.getElementById(id)?.scrollIntoView({behavior:'smooth'})};return <header className="site-header"><button className="site-logo" onClick={()=>go('home')}><span>DJA</span><i/></button><nav className={open?'open':''}>{[['about','Sobre'],['career','Carreira'],['projects','Projetos'],['stack','Stack'],['contact','Contato']].map(([id,label])=><button onClick={()=>go(id)} key={id}>{label}</button>)}<button className="design-switch" onClick={onDesign}>Modo Design ↗</button></nav><div className="header-meta"><span><i/> OPEN TO WORK</span><button className="menu-toggle" onClick={()=>setOpen(!open)}>{open?'FECHAR':'MENU'}</button></div></header>}
