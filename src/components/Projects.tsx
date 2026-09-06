@@ -1,539 +1,117 @@
-import { useState, useRef } from 'react';
-import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from 'motion/react';
-import { Bot, Image as ImageIcon, LayoutDashboard, FolderGit2, X, ArrowRight, Sparkles, Wand2, Zap, Camera, Share2, Cpu, Gamepad2, Github } from 'lucide-react';
+import { useState } from 'react';
+import { AnimatePresence, motion } from 'motion/react';
+import { ArrowRight, ArrowUpRight, Bot, CalendarDays, Check, Clapperboard, Gamepad2, Github, Layers3, Network, Share2, Sparkles, WandSparkles, X } from 'lucide-react';
 import ModalWrapper from './ModalWrapper';
 
-function BeforeAfterSlider({ beforeImage, afterImage }: { beforeImage: string, afterImage: string }) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const foregroundRef = useRef<HTMLDivElement>(null);
-  const sliderLineRef = useRef<HTMLDivElement>(null);
-  const [isDragging, setIsDragging] = useState(false);
+type Project = {
+  title: string; eyebrow: string; description: string; fullDescription: string;
+  coverImage: string; tech: string[]; year: string; scope: string;
+  githubLink?: string; playLink?: string;
+};
 
-  const handleMove = (clientX: number) => {
-    if (!containerRef.current) return;
-    const rect = containerRef.current.getBoundingClientRect();
-    const x = Math.max(0, Math.min(clientX - rect.left, rect.width));
-    const percent = (x / rect.width) * 100;
-    
-    if (foregroundRef.current) {
-      foregroundRef.current.style.clipPath = `polygon(0 0, ${percent}% 0, ${percent}% 100%, 0 100%)`;
-    }
-    if (sliderLineRef.current) {
-      sliderLineRef.current.style.left = `${percent}%`;
-    }
-  };
+const investolq: Project = {
+  title: 'Investolq Portal Studio',
+  eyebrow: 'Projeto principal · Automação de conteúdo com IA',
+  description: 'Uma central autônoma que pesquisa pautas financeiras, cria carrosséis e vídeos, agenda e publica — tudo a partir de um único painel.',
+  fullDescription: 'O Investolq transforma uma agenda semanal em uma operação completa de conteúdo. O usuário escolhe horários, formatos e, se quiser, um tema. A plataforma pesquisa notícias, seleciona a pauta com mais potencial, evita repetições, cria o roteiro e conduz a produção até a publicação.\n\nNão é apenas um agendador ou editor: é uma pequena central de produção autônoma. O projeto reúne dois produtos dentro do mesmo ecossistema — um motor para carrosséis, posts e Stories e outro para vídeos verticais programáticos com narração, animação e identidade visual.',
+  coverImage: '/investolq-cover.png',
+  tech: ['n8n', 'Python', 'FastAPI', 'Remotion', 'React', 'TypeScript', 'FFmpeg', 'TTS', 'Next.js'],
+  year: '2026', scope: 'Produto, automação e vídeo',
+};
 
-  const onPointerDown = (e: React.PointerEvent) => {
-    setIsDragging(true);
-    handleMove(e.clientX);
-    e.currentTarget.setPointerCapture(e.pointerId);
-  };
+const curriculumDash: Project = {
+  title: 'Currículo Dash', eyebrow: 'Jogo web · IA aplicada ao desenvolvimento',
+  description: 'Um endless runner criado em dois dias: supere os obstáculos reais da busca de emprego e envie currículos para pontuar.',
+  fullDescription: 'Currículo Dash é um jogo leve inspirado no clássico Chrome Dino. O jogador corre por uma cidade pixelizada, desvia de obstáculos como ghosting do RH, falta de experiência e vagas já preenchidas, e arremessa currículos em plataformas de emprego.\n\nO projeto foi desenvolvido em HTML, CSS e JavaScript puro em apenas dois dias, usando IA como acelerador de implementação sem abrir mão da lógica, performance e experiência do jogador.',
+  coverImage: '/capa-curriculo-dash.png', tech: ['HTML5', 'CSS3', 'JavaScript', 'AI-assisted dev'],
+  year: '2026', scope: 'Game design e front-end',
+  playLink: 'https://dashdoemprego.vercel.app/', githubLink: 'https://github.com/Dja-Cripto/dashdoemprego',
+};
 
-  const onPointerMove = (e: React.PointerEvent) => {
-    if (!isDragging) return;
-    handleMove(e.clientX);
-  };
-
-  const onPointerUp = (e: React.PointerEvent) => {
-    setIsDragging(false);
-    e.currentTarget.releasePointerCapture(e.pointerId);
-  };
-
-  return (
-    <div 
-      ref={containerRef}
-      className="relative w-full h-full rounded-2xl overflow-hidden select-none group border border-white/10 shadow-xl hover:shadow-[0_0_30px_rgba(0,240,255,0.15)] hover:border-cyan-500/30 transition-all duration-300 touch-none cursor-ew-resize"
-      onPointerDown={onPointerDown}
-      onPointerMove={onPointerMove}
-      onPointerUp={onPointerUp}
-      onPointerCancel={onPointerUp}
-    >
-      {/* After Image (Background) */}
-      <img 
-        src={afterImage} 
-        alt="Depois (Gerado por IA)" 
-        className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-        referrerPolicy="no-referrer"
-        loading="lazy"
-        draggable={false}
-      />
-      
-      {/* Before Image (Foreground, clipped) */}
-      <div 
-        ref={foregroundRef}
-        className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none"
-        style={{ clipPath: `polygon(0 0, 50% 0, 50% 100%, 0 100%)`, willChange: 'clip-path' }}
-      >
-        <img 
-          src={beforeImage} 
-          alt="Antes (Foto Original)" 
-          className="absolute inset-0 w-full h-full object-cover"
-          referrerPolicy="no-referrer"
-          loading="lazy"
-          draggable={false}
-        />
-      </div>
-
-      {/* Slider Line */}
-      <div 
-        ref={sliderLineRef}
-        className="absolute top-0 bottom-0 w-1 bg-white shadow-[0_0_10px_rgba(0,0,0,0.5)] pointer-events-none"
-        style={{ left: `50%`, transform: 'translateX(-50%)', willChange: 'left' }}
-      >
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-xl transition-transform group-hover:scale-110">
-          <div className="flex gap-1.5">
-            <div className="w-0.5 h-4 bg-gray-400 rounded-full" />
-            <div className="w-0.5 h-4 bg-gray-400 rounded-full" />
-          </div>
-        </div>
-      </div>
-
-      {/* Labels */}
-      <div className="absolute top-4 left-4 px-3 py-1.5 bg-black/60 backdrop-blur-md rounded-lg text-white text-xs font-mono border border-white/10 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
-        Antes
-      </div>
-      <div className="absolute top-4 right-4 px-3 py-1.5 bg-cyan-500/60 backdrop-blur-md rounded-lg text-white text-xs font-mono border border-cyan-500/30 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
-        Depois
-      </div>
-    </div>
-  );
-}
-
-function DraggableGallery({ images, beforeAfters, orientation = 'vertical' }: { images: string[], beforeAfters?: { before: string, after: string }[], orientation?: 'horizontal' | 'vertical' }) {
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const totalItems = (beforeAfters?.length || 0) + images.length;
-
-  const handleScroll = () => {
-    if (!scrollRef.current) return;
-    const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
-    const maxScroll = scrollWidth - clientWidth;
-    const progress = maxScroll > 0 ? scrollLeft / maxScroll : 0;
-    setScrollProgress(progress);
-  };
-
-  const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const progress = parseFloat(e.target.value);
-    setScrollProgress(progress);
-    if (scrollRef.current) {
-      const { scrollWidth, clientWidth } = scrollRef.current;
-      const maxScroll = scrollWidth - clientWidth;
-      scrollRef.current.scrollTo({ left: progress * maxScroll, behavior: 'auto' });
-    }
-  };
-
-  return (
-    <div className="relative w-full flex flex-col items-center group/gallery">
-      <div 
-        ref={scrollRef}
-        onScroll={handleScroll}
-        className="flex gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory pb-4 pt-4 px-4 sm:px-2 -mx-4 sm:mx-0 w-full"
-        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}
-      >
-        {beforeAfters && beforeAfters.map((ba, i) => (
-          <div key={`ba-${i}`} className="snap-center shrink-0 w-[90vw] sm:w-[320px] md:w-[360px] aspect-[9/16]">
-            <BeforeAfterSlider beforeImage={ba.before} afterImage={ba.after} />
-          </div>
-        ))}
-        {images.map((img, i) => (
-          <div key={i} className={`snap-center shrink-0 ${orientation === 'horizontal' ? 'w-[85vw] sm:w-[600px] md:w-[800px] aspect-video' : 'w-[90vw] sm:w-[320px] md:w-[360px] aspect-[9/16]'} rounded-2xl overflow-hidden border border-white/10 bg-[#121212] shadow-xl hover:shadow-[0_0_30px_rgba(0,240,255,0.15)] hover:border-cyan-500/30 transition-all duration-300 group`}>
-            <img 
-              src={img} 
-              alt={`Galeria ${i + 1}`} 
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 pointer-events-none"
-              loading="lazy"
-              draggable={false}
-              onError={(e) => {
-                const target = e.target as HTMLImageElement;
-                target.src = `https://placehold.co/720x1280/1a1a1a/00f0ff?text=Imagem+${i + 1}`;
-              }}
-            />
-          </div>
-        ))}
-      </div>
-      
-      {/* Custom Slider */}
-      {totalItems > 1 && (
-        <div className="w-full max-w-xs sm:max-w-md mt-6 mb-2 flex flex-col items-center justify-center gap-4">
-          <input
-            type="range"
-            min="0"
-            max="1"
-            step="0.001"
-            value={scrollProgress}
-            onChange={handleSliderChange}
-            className="w-full h-2 bg-white/10 rounded-full appearance-none cursor-pointer outline-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-8 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-cyan-400 [&::-webkit-slider-thumb]:hover:bg-cyan-300 [&::-webkit-slider-thumb]:transition-colors [&::-webkit-slider-thumb]:shadow-[0_0_10px_rgba(0,240,255,0.5)]"
-          />
-          <div className="flex items-center justify-center gap-2">
-            {Array.from({ length: totalItems }).map((_, i) => {
-              const activeIndex = Math.round(scrollProgress * (totalItems - 1));
-              return (
-                <div 
-                  key={i} 
-                  className={`h-1.5 rounded-full transition-all duration-300 ${i === activeIndex ? 'w-6 bg-cyan-400' : 'w-1.5 bg-white/30'}`}
-                />
-              );
-            })}
-          </div>
-        </div>
-      )}
-      
-      <style>{`
-        .overflow-x-auto::-webkit-scrollbar {
-          display: none;
-        }
-        input[type=range]::-moz-range-thumb {
-          width: 32px;
-          height: 12px;
-          border-radius: 9999px;
-          background-color: #22d3ee;
-          border: none;
-          cursor: pointer;
-          transition: background-color 0.2s;
-          box-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
-        }
-        input[type=range]::-moz-range-thumb:hover {
-          background-color: #67e8f9;
-        }
-      `}</style>
-    </div>
-  );
-}
-
-const projects = [
-  {
-    title: "Currículo Dash",
-    description: "Um endless runner baseado na stack web (HTML, CSS, JS) desenvolvido em 2 dias com auxílio de IA. Desvie de obstáculos reais da busca de emprego e arremesse currículos nos sites.",
-    fullDescription: "Currículo Dash é um jogo no estilo endless runner divertido e interativo inspirado no clássico Chrome Dino. O jogador controla um jovem em busca de sua primeira oportunidade de emprego que precisa correr pelas ruas de uma cidade pixelizada.\n\nO grande diferencial são os obstáculos, que representam as dificuldades reais enfrentadas na busca por uma vaga de emprego, como falta de experiência, o temido ghosting do RH, entrevistas complexas, escala 6x1 e vagas já preenchidas. Para pontuar, o jogador precisa saltar esses desafios e arremessar currículos em painéis de sites de emprego integrados (LinkedIn, InfoJobs, Indeed e Gupy). Quanto mais tempo sobreviver e mais currículos enviar, maior será a pontuação.\n\nO projeto demonstra de forma prática o poder do desenvolvimento moderno assistido por IA:\n• Stack 100% Web: Desenvolvido utilizando apenas as tecnologias fundamentais da web (HTML5, CSS3 e JavaScript puro), mantendo-o leve e acessível.\n• Entrega em 2 Dias: O jogo foi concebido e finalizado em apenas dois dias graças ao suporte da inteligência artificial para agilizar e estruturar a escrita do código. Sem o auxílio da IA, um projeto desse escopo levaria facilmente cerca de uma semana para ser concluído.\n• Alta Performance de Entrega: Um caso prático de como ferramentas inteligentes podem potencializar o desempenho do programador, permitindo focar na lógica de jogo e na experiência do usuário mesmo com uma stack simples e pura.",
-    tech: ["HTML5", "CSS3", "JavaScript", "AI Assisted Dev"],
-    icon: FolderGit2,
-    color: "from-yellow-500/20 to-amber-500/20",
-    border: "group-hover:border-yellow-500/50",
-    featured: true,
-    coverImage: "/capa-curriculo-dash.png",
-    coverFallback: "/capa-curriculo-dash.png",
-    playLink: "https://dashdoemprego.vercel.app/",
-    githubLink: "https://github.com/Dja-Cripto/dashdoemprego",
-    images: []
-  }
+const pipeline = [
+  { icon: CalendarDays, label: 'Planeja', copy: 'Agenda, formato e tema' },
+  { icon: Sparkles, label: 'Pesquisa', copy: 'Tendências e notícias' },
+  { icon: WandSparkles, label: 'Produz', copy: 'Texto, imagem e vídeo' },
+  { icon: Share2, label: 'Publica', copy: 'Instagram e YouTube' },
 ];
 
-function ProjectModal({ project, isOpen, onClose }: { project: any, isOpen: boolean, onClose: () => void }) {
+const capabilities = ['Agenda semanal de conteúdo', 'Pesquisa e seleção de pautas com IA', 'Histórico para evitar repetições', 'Roteiros, legendas e hashtags', 'Narração, música e efeitos sonoros', 'Publicação automática e logs'];
+
+function InvestolqCase({ onClose }: { onClose: () => void }) {
   return (
-    <ModalWrapper isOpen={isOpen} onClose={onClose}>
-      <div className="bg-[#0f0f0f] w-full flex flex-col relative font-sans">
-        <div className="relative w-full h-[40vw] min-h-[250px] max-h-[500px] overflow-hidden">
-          <img 
-            src={project.coverImage} 
-            alt={project.title} 
-            className="w-full h-full object-cover opacity-60"
-            onError={(e) => {
-              const img = e.target as HTMLImageElement;
-              if (project.coverFallback && img.src !== window.location.origin + project.coverFallback) {
-                img.src = project.coverFallback;
-              } else {
-                img.src = `https://placehold.co/1200x500/111827/00f0ff?text=${project.title}`;
-              }
-            }}
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0f0f0f] via-[#0f0f0f]/40 to-transparent" />
-          
-          <div className="absolute bottom-0 left-0 p-8 md:p-12 w-full">
-            <div className="flex items-center gap-3 mb-4">
-               <div className="w-12 h-12 rounded-xl bg-cyan-500/20 flex items-center justify-center border border-cyan-500/30">
-                  <project.icon className="w-6 h-6 text-cyan-400" />
-               </div>
-               {project.beta && (
-                  <span className="px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-mono uppercase tracking-wider flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
-                    Beta
-                  </span>
-               )}
-            </div>
-            <h3 className="text-3xl md:text-5xl font-black text-white tracking-tighter uppercase mb-4">{project.title}</h3>
+    <ModalWrapper isOpen onClose={onClose}>
+      <article className="case-shell">
+        <header className="case-hero">
+          <img src="/investolq-cover.png" alt="Interface do Investolq Portal Studio" />
+          <div className="case-hero-shade" />
+          <div className="case-hero-copy"><span className="terminal-kicker">// flagship_case_01</span><h2>Investolq<br />Portal Studio</h2><p>Uma operação de conteúdo financeiro, do insight à publicação.</p></div>
+        </header>
+        <div className="case-body">
+          <div className="case-intro-grid">
+            <div><span className="terminal-kicker">Visão geral</span><h3>Um produto.<br /><span>Dois motores.</span><br />Uma operação.</h3></div>
+            <div className="case-prose">{investolq.fullDescription.split('\n\n').map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</div>
           </div>
+          <div className="case-stats" aria-label="Resumo do projeto">
+            <div><strong>05</strong><span>formatos de conteúdo</span></div><div><strong>02</strong><span>motores de produção</span></div><div><strong>01</strong><span>painel central</span></div><div><strong>24/7</strong><span>operação automatizada</span></div>
+          </div>
+          <section className="case-section">
+            <div className="case-section-heading"><span className="terminal-kicker">Demo do produto</span><h3>Veja a central em operação.</h3></div>
+            <div className="vimeo-frame"><iframe src="https://player.vimeo.com/video/1224398089?title=0&byline=0&portrait=0" title="Demonstração do Investolq Portal Studio" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" allowFullScreen /></div>
+          </section>
+          <section className="case-section">
+            <div className="case-section-heading"><span className="terminal-kicker">Arquitetura do produto</span><h3>Dois estúdios especializados, coordenados por uma só inteligência.</h3></div>
+            <div className="engine-grid">
+              <div className="engine-card"><div className="engine-icon"><Layers3 /></div><span>MOTOR 01</span><h4>Carousel Studio</h4><p>Python e FastAPI transformam uma pauta em carrosséis, posts únicos e Stories prontos para publicação.</p><ul><li><Check /> Composição automática</li><li><Check /> Identidade visual consistente</li><li><Check /> Legendas e hashtags</li></ul></div>
+              <div className="engine-card engine-card-purple"><div className="engine-icon"><Clapperboard /></div><span>MOTOR 02</span><h4>Motion Studio</h4><p>Remotion, React, TTS e FFmpeg convertem o roteiro em vídeos verticais animados e narrados.</p><ul><li><Check /> Vídeo programático</li><li><Check /> Narração e trilha</li><li><Check /> Cenas adaptadas ao roteiro</li></ul></div>
+            </div>
+          </section>
+          <section className="case-section">
+            <div className="case-section-heading compact"><span className="terminal-kicker">Fluxo autônomo</span><h3>Quatro etapas. Quase nenhum trabalho manual.</h3></div>
+            <div className="pipeline-grid">{pipeline.map((item, index) => <div className="pipeline-step" key={item.label}><span>0{index + 1}</span><item.icon /><strong>{item.label}</strong><small>{item.copy}</small></div>)}</div>
+          </section>
+          <section className="case-gallery">
+            <div className="gallery-copy"><span className="terminal-kicker">Painel e automação</span><h3>Controle humano.<br />Execução automática.</h3><p>O painel torna a automação visível: agenda, produções, publicações e erros permanecem acessíveis sem abrir o n8n.</p><div className="capability-list">{capabilities.map((item) => <span key={item}><Check /> {item}</span>)}</div></div>
+            <div className="gallery-stack"><figure><img src="/investolq-dashboard.png" alt="Painel de acompanhamento do Investolq" /><figcaption>01 — Painel de operação</figcaption></figure><figure><img src="/investolq-agenda.png" alt="Agenda semanal do Investolq" /><figcaption>02 — Agenda inteligente</figcaption></figure><figure><img src="/investolq-n8n.png" alt="Fluxo de automação no n8n" /><figcaption>03 — Orquestração n8n</figcaption></figure></div>
+          </section>
+          <section className="stack-marquee" aria-label="Tecnologias utilizadas">{investolq.tech.map((tech) => <span key={tech}>{tech}</span>)}</section>
+          <footer className="case-footer"><p>Case desenvolvido por Daniel de Jesus Alves · {investolq.year}</p><button onClick={onClose}>Fechar case <X /></button></footer>
         </div>
-
-        <div className="p-8 md:p-16 space-y-16">
-          <div className="flex flex-wrap gap-2">
-            {project.tech.map((tech: string, i: number) => (
-              <span key={i} className="text-xs font-mono px-4 py-2 rounded-lg bg-white/5 text-cyan-100/70 border border-white/10">
-                {tech}
-              </span>
-            ))}
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
-            <div className="lg:col-span-3 prose prose-invert max-w-none flex flex-col gap-8">
-              <div>
-                <p className="text-xs font-bold uppercase tracking-widest text-cyan-500 mb-6 font-mono">Sobre o Projeto</p>
-                {project.fullDescription.split('\n\n').map((paragraph: string, i: number) => (
-                  <p key={i} className="text-gray-300 text-lg sm:text-xl leading-relaxed mb-6 whitespace-pre-line font-light">
-                    {paragraph}
-                  </p>
-                ))}
-              </div>
-
-              {(project.playLink || project.githubLink) && (
-                <div className="flex flex-wrap gap-4">
-                  {project.playLink && (
-                    <motion.a
-                      href={project.playLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="inline-flex items-center gap-2.5 px-6 py-4 rounded-2xl bg-gradient-to-r from-yellow-500 to-amber-500 text-black font-black text-sm tracking-wider uppercase shadow-[0_0_30px_rgba(245,158,11,0.2)] hover:shadow-[0_0_40px_rgba(245,158,11,0.4)] transition-all"
-                    >
-                      <Gamepad2 className="w-5 h-5" />
-                      Jogar Jogo / Acessar
-                    </motion.a>
-                  )}
-                  {project.githubLink && (
-                    <motion.a
-                      href={project.githubLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="inline-flex items-center gap-2.5 px-6 py-4 rounded-2xl bg-white/10 border border-white/20 text-white hover:bg-white/20 font-bold text-sm tracking-wider uppercase transition-all"
-                    >
-                      <Github className="w-5 h-5" />
-                      Repositório GitHub
-                    </motion.a>
-                  )}
-                </div>
-              )}
-            </div>
-
-            {project.status && (
-              <div className="lg:col-span-2 space-y-8">
-                <div className="bg-white/5 border border-white/10 rounded-3xl p-8">
-                  <h4 className="text-lg font-bold mb-6 text-white flex items-center gap-2">
-                    <FolderGit2 className="text-cyan-400 w-5 h-5" />
-                    Status: <span className="text-cyan-400 font-mono text-xs uppercase tracking-wider ml-2">{project.status.label}</span>
-                  </h4>
-                  {(project.status.current || project.status.next) && (
-                    <div className="space-y-6">
-                      {project.status.current && (
-                        <div>
-                          <p className="text-white text-sm font-bold mb-3 uppercase tracking-tighter">Concluído:</p>
-                          <ul className="space-y-2">
-                            {project.status.current.map((item: string, i: number) => (
-                              <li key={i} className="text-gray-400 text-sm flex items-start gap-2">
-                                <span className="text-emerald-500/50 mt-0.5">✓</span> {item}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-                      {project.status.next && (
-                        <div>
-                          <p className="text-white text-sm font-bold mb-3 uppercase tracking-tighter">Próximos passos:</p>
-                          <ul className="space-y-2">
-                            {project.status.next.map((item: string, i: number) => (
-                              <li key={i} className="text-gray-400 text-sm flex items-start gap-2">
-                                <span className="text-cyan-500/50 mt-0.5">→</span> {item}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-                    </div>
-                  )}
-                </div>
-              </div>
-            )}
-          </div>
-
-          {project.features && (
-            <div className="space-y-8">
-              <p className="text-xs font-bold uppercase tracking-widest text-cyan-500 font-mono">Funcionalidades</p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {project.features.map((feature: any, index: number) => (
-                  <div key={index} className="bg-white/[0.03] p-8 rounded-[2rem] border border-white/5 hover:border-cyan-500/30 transition-all group">
-                    <div className="w-12 h-12 rounded-2xl bg-cyan-500/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                      <feature.icon className="w-6 h-6 text-cyan-400" />
-                    </div>
-                    <h4 className="text-xl font-bold text-white mb-2">{feature.title}</h4>
-                    <p className="text-gray-400 leading-relaxed font-light">{feature.desc}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {(project.images?.length > 0 || project.beforeAfters?.length > 0) && (
-            <div className="space-y-10">
-               <p className="text-xs font-bold uppercase tracking-widest text-cyan-500 font-mono">Visualização & Galeria</p>
-              <DraggableGallery images={project.images || []} beforeAfters={project.beforeAfters} orientation={project.imageOrientation} />
-            </div>
-          )}
-
-          <div className="border-t border-white/10 pt-12 flex flex-col sm:flex-row items-center justify-between gap-6">
-            <p className="text-sm text-gray-500 font-mono">© {new Date().getFullYear()} — {project.title} Case Research</p>
-            <button onClick={onClose} className="flex items-center gap-2 text-sm font-bold text-white hover:text-cyan-400 transition-colors uppercase tracking-widest">Fechar Case <X className="w-4 h-4" /></button>
-          </div>
-        </div>
-      </div>
+      </article>
     </ModalWrapper>
   );
 }
 
-function ProjectCard({ project, index, onClick }: { project: any, index: number, onClick: () => void }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-
-  const mouseXSpring = useSpring(x, { stiffness: 300, damping: 30 });
-  const mouseYSpring = useSpring(y, { stiffness: 300, damping: 30 });
-
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["10deg", "-10deg"]);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-10deg", "10deg"]);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!ref.current) return;
-    const rect = ref.current.getBoundingClientRect();
-    const xPct = (e.clientX - rect.left) / rect.width - 0.5;
-    const yPct = (e.clientY - rect.top) / rect.height - 0.5;
-    x.set(xPct);
-    y.set(yPct);
-  };
-
-  const handleMouseLeave = () => {
-    x.set(0); y.set(0);
-  };
-
+function StandardCase({ project, onClose }: { project: Project; onClose: () => void }) {
   return (
-    <div style={{ perspective: 1500 }} className="h-full group cursor-pointer" onClick={onClick}>
-      <motion.div
-        ref={ref}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-        style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6, delay: index * 0.1 }}
-        className={`relative h-full glass-panel rounded-[2rem] p-6 border ${project.featured ? 'border-cyan-500/30 shadow-[0_0_30px_rgba(0,240,255,0.05)]' : 'border-white/5'} flex flex-col overflow-hidden transition-all duration-500 hover:shadow-[0_20px_50px_-10px_rgba(0,240,255,0.15)]`}
-      >
-        <div className="relative w-full h-48 mb-6 rounded-2xl overflow-hidden bg-gray-900 border border-white/5">
-           <img 
-            src={project.coverImage} 
-            alt={project.title} 
-            className="w-full h-full object-cover opacity-70 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" 
-            onError={(e) => {
-              const img = e.target as HTMLImageElement;
-              if (project.coverFallback && img.src !== window.location.origin + project.coverFallback) {
-                img.src = project.coverFallback;
-              } else {
-                img.src = `https://placehold.co/600x400/111827/00f0ff?text=${project.title}`;
-              }
-            }}
-           />
-           <div className="absolute inset-0 bg-gradient-to-t from-gray-950/80 to-transparent" />
-           <div className="absolute bottom-4 left-4">
-              <div className="w-10 h-10 rounded-xl bg-black/60 backdrop-blur-md flex items-center justify-center border border-white/10">
-                 <project.icon className="w-5 h-5 text-cyan-400" />
-              </div>
-           </div>
+    <ModalWrapper isOpen onClose={onClose}>
+      <article className="case-shell standard-case">
+        <header className="case-hero compact-hero"><img src={project.coverImage} alt={project.title} /><div className="case-hero-shade" /><div className="case-hero-copy"><span className="terminal-kicker">// selected_work</span><h2>{project.title}</h2></div></header>
+        <div className="case-body"><div className="case-intro-grid"><div><span className="terminal-kicker">Sobre o projeto</span><h3>Ideia rápida.<br /><span>Execução afiada.</span></h3></div><div className="case-prose">{project.fullDescription.split('\n\n').map((p) => <p key={p}>{p}</p>)}</div></div>
+          <div className="project-actions">{project.playLink && <a href={project.playLink} target="_blank" rel="noreferrer"><Gamepad2 /> Jogar agora <ArrowUpRight /></a>}{project.githubLink && <a className="secondary" href={project.githubLink} target="_blank" rel="noreferrer"><Github /> Ver código <ArrowUpRight /></a>}</div>
+          <section className="stack-marquee">{project.tech.map((tech) => <span key={tech}>{tech}</span>)}</section><footer className="case-footer"><p>Case desenvolvido por Daniel de Jesus Alves · {project.year}</p><button onClick={onClose}>Fechar case <X /></button></footer>
         </div>
+      </article>
+    </ModalWrapper>
+  );
+}
 
-        <div className="flex justify-between items-start mb-3">
-          <h3 className="text-2xl font-black text-white tracking-tighter uppercase leading-tight">{project.title}</h3>
-          {project.featured && (
-            <div className="px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-[10px] font-bold uppercase tracking-widest shrink-0 ml-2">Destaque</div>
-          )}
-        </div>
-        
-        <p className="text-gray-400 mb-6 flex-grow leading-relaxed font-light line-clamp-3 text-sm">
-          {project.description}
-        </p>
-
-        <div className="flex flex-wrap gap-2 mb-6">
-          {project.tech.slice(0, 3).map((tech: string, i: number) => (
-            <span key={i} className="text-[10px] font-mono px-2.5 py-1 rounded-md bg-white/5 text-gray-400 border border-white/10">
-              {tech}
-            </span>
-          ))}
-        </div>
-
-        <div className="flex items-center gap-2 text-cyan-400 font-bold text-xs uppercase tracking-widest">
-           <span>Ver detalhes</span>
-           <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-        </div>
-      </motion.div>
-    </div>
+function FeaturedProject({ onOpen }: { onOpen: () => void }) {
+  return (
+    <motion.button type="button" className="featured-project" onClick={onOpen} initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-80px' }} transition={{ duration: 0.8 }}>
+      <div className="featured-project-media"><img src={investolq.coverImage} alt="Investolq Portal Studio" /><div className="featured-orbit"><Bot /><span>AI</span></div></div>
+      <div className="featured-project-copy"><div className="project-index"><span>01</span><small>PROJETO PRINCIPAL</small></div><span className="terminal-kicker">{investolq.eyebrow}</span><h3>Investolq<br /><em>Portal Studio</em></h3><p>{investolq.description}</p><div className="dual-engine"><span><Layers3 /> Carousel Studio</span><span><Clapperboard /> Motion Studio</span></div><div className="view-case">Explorar o case <ArrowRight /></div></div>
+    </motion.button>
   );
 }
 
 export default function Projects() {
-  const [selectedProject, setSelectedProject] = useState<any>(null);
-
+  const [selected, setSelected] = useState<Project | null>(null);
   return (
-    <section id="projects" className="py-16 lg:py-32 px-6 relative z-10">
-      <div className="max-w-[1440px] mx-auto w-full">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-        >
-          {/* ── Header ── */}
-          <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-8 lg:gap-16 items-end mb-16 lg:mb-24">
-            <div className="space-y-4">
-              <motion.span initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} className="text-cyan-500 font-mono text-xs uppercase tracking-[0.3em] mb-4 block">Portfolio</motion.span>
-              <h2 className="text-4xl md:text-7xl lg:text-8xl xl:text-9xl font-black text-white tracking-tighter leading-none uppercase">
-                Selected<br /><span className="text-transparent" style={{ WebkitTextStroke: '1.5px rgba(255,255,255,0.15)' }}>Projects.</span>
-              </h2>
-            </div>
-            <div className="space-y-6 border-l border-white/10 pl-8 pb-2">
-              <p className="text-gray-400 text-lg md:text-xl lg:text-2xl leading-relaxed font-light">
-                Projetos reais: automação, produto com IA e interfaces que suportam operação — do protótipo ao fluxo em produção.
-              </p>
-              <div className="h-px w-24 bg-cyan-500/30" />
-            </div>
-          </div>
-
-          {/* ── Project Cards Grid ── */}
-          <div className={`${projects.length === 1 ? 'flex justify-center' : 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8'} mb-12 lg:mb-16`}>
-            {projects.map((project, index) => (
-              <div key={index} className={projects.length === 1 ? 'w-full max-w-2xl' : ''}>
-                <ProjectCard 
-                  project={project} 
-                  index={index} 
-                  onClick={() => setSelectedProject(project)}
-                />
-              </div>
-            ))}
-          </div>
-
-          {/* ── Vision Quote ── */}
-          <div className="grid grid-cols-1 lg:grid-cols-[1.3fr_0.7fr] gap-12 items-center bg-white/[0.02] border border-white/5 rounded-[2.5rem] p-10 md:p-20 relative overflow-hidden group/vision">
-             {/* Decorative glow inside */}
-             <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-500/5 rounded-full blur-[100px] pointer-events-none group-hover/vision:bg-cyan-500/10 transition-colors duration-1000" />
-             
-             <div className="space-y-8 relative z-10">
-                <span className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-mono uppercase tracking-[0.2em]">
-                   <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
-                   Vision & Research
-                </span>
-                <p className="text-3xl md:text-4xl xl:text-5xl font-light text-gray-200 leading-tight italic tracking-tight">
-                  "Quero que time e cliente enxerguem resultado rápido: menos clique manual, mais dado útil e produto que responde."
-                </p>
-             </div>
-             <div className="text-gray-500 leading-relaxed font-light text-lg md:text-xl xl:text-2xl border-l lg:border-l-0 lg:border-t border-white/10 pt-8 lg:pt-12 relative z-10 mt-8 lg:mt-0">
-                Cada case mistura decisão de arquitetura, integração e interface — sempre com o olho no que o usuário final precisa fazer em menos passos.
-             </div>
-          </div>
-        </motion.div>
-      </div>
-
-      <ProjectModal 
-        project={selectedProject ?? projects[0]} 
-        isOpen={!!selectedProject}
-        onClose={() => setSelectedProject(null)} 
-      />
-    </section>
+    <section id="projects" className="projects-section"><div className="projects-inner">
+      <header className="section-editorial-heading"><div><span className="terminal-kicker">// trabalhos selecionados</span><h2>Projetos que<br /><em>fazem o trabalho.</em></h2></div><p>Sistemas reais, automações e experiências digitais construídas da estratégia à entrega.</p></header>
+      <FeaturedProject onOpen={() => setSelected(investolq)} />
+      <div className="secondary-projects"><motion.button type="button" onClick={() => setSelected(curriculumDash)} className="secondary-project" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}><div className="secondary-project-image"><img src={curriculumDash.coverImage} alt={curriculumDash.title} /><span>02</span></div><div className="secondary-project-copy"><span className="terminal-kicker">{curriculumDash.eyebrow}</span><h3>{curriculumDash.title}</h3><p>{curriculumDash.description}</p><div className="project-meta"><span>{curriculumDash.year}</span><span>{curriculumDash.scope}</span><ArrowUpRight /></div></div></motion.button>
+        <div className="manifesto-card"><Network /><span className="terminal-kicker">Próximo desafio</span><h3>Do problema ao produto — conectando código, dados e operação.</h3><a href="#contact">Iniciar um projeto <ArrowRight /></a></div></div>
+    </div><AnimatePresence>{selected?.title === investolq.title && <InvestolqCase onClose={() => setSelected(null)} />}{selected?.title === curriculumDash.title && <StandardCase project={curriculumDash} onClose={() => setSelected(null)} />}</AnimatePresence></section>
   );
 }

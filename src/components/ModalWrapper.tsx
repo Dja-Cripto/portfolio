@@ -98,7 +98,7 @@ export default function ModalWrapper({ children, onClose, isOpen }: ModalWrapper
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              padding: '1rem',
+              padding: 'clamp(0rem, 2vw, 1.25rem)',
               pointerEvents: 'none',
             }}
           >
@@ -113,10 +113,11 @@ export default function ModalWrapper({ children, onClose, isOpen }: ModalWrapper
                 pointerEvents: 'auto',
                 position: 'relative',
                 width: '100%',
-                maxWidth: '80rem',      /* 1280px */
-                maxHeight: '90vh',
-                background: '#FAFAFA',
-                borderRadius: '2rem',
+                maxWidth: '88rem',
+                maxHeight: '94vh',
+                background: '#080a0b',
+                borderRadius: '0',
+                border: '1px solid rgba(98,232,255,0.22)',
                 overflowY: 'auto',
                 overflowX: 'hidden',
                 boxShadow: '0 50px 100px rgba(0,0,0,0.7)',
