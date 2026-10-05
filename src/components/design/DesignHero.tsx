@@ -106,7 +106,7 @@ export default function DesignHero({ startTransition }: DesignHeroProps) {
             transition={{ duration: 0.8, delay: 0.6 }}
             className="text-base md:text-xl lg:text-2xl text-gray-600 max-w-lg leading-relaxed font-light"
           >
-            Identidade de ponta a ponta, social com foco em resultado, vídeo promocional e sites que parecem produto — com IA acelerando produção, não substituindo critério de marca.
+            Identidade visual, campanhas e filmes produzidos com IA. Conecto direção criativa, vídeo e automação para apresentar produtos e levar conteúdo ao público.
           </motion.p>
 
           {/* CTA BUTTONS — completely different style from programming */}

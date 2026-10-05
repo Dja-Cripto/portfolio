@@ -7,9 +7,10 @@ interface ModalWrapperProps {
   children: React.ReactNode;
   onClose: () => void;
   isOpen: boolean;
+  closeButtonTone?: 'light' | 'dark';
 }
 
-export default function ModalWrapper({ children, onClose, isOpen }: ModalWrapperProps) {
+export default function ModalWrapper({ children, onClose, isOpen, closeButtonTone = 'dark' }: ModalWrapperProps) {
   useEffect(() => {
     if (isOpen) {
       const originalOverflow = document.body.style.overflow;
@@ -71,7 +72,7 @@ export default function ModalWrapper({ children, onClose, isOpen }: ModalWrapper
               width: '3rem',
               height: '3rem',
               borderRadius: '50%',
-              background: 'rgba(255,255,255,0.12)',
+              background: closeButtonTone === 'light' ? '#17382f' : 'rgba(255,255,255,0.12)',
               backdropFilter: 'blur(12px)',
               WebkitBackdropFilter: 'blur(12px)',
               border: '1px solid rgba(255,255,255,0.25)',
@@ -82,8 +83,8 @@ export default function ModalWrapper({ children, onClose, isOpen }: ModalWrapper
               boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
               transition: 'background 0.2s, transform 0.2s',
             }}
-            onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = 'rgba(255,255,255,0.22)'; (e.currentTarget as HTMLButtonElement).style.transform = 'scale(1.1)'; }}
-            onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = 'rgba(255,255,255,0.12)'; (e.currentTarget as HTMLButtonElement).style.transform = 'scale(1)'; }}
+            onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = closeButtonTone === 'light' ? '#295849' : 'rgba(255,255,255,0.22)'; (e.currentTarget as HTMLButtonElement).style.transform = 'scale(1.1)'; }}
+            onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = closeButtonTone === 'light' ? '#17382f' : 'rgba(255,255,255,0.12)'; (e.currentTarget as HTMLButtonElement).style.transform = 'scale(1)'; }}
           >
             <X style={{ width: '1.35rem', height: '1.35rem', color: 'white', strokeWidth: 2.5 }} />
           </motion.button>

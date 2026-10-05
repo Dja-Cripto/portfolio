@@ -4,7 +4,8 @@ const oQueFacoDesign = [
   'Identidade visual completa: logo, paleta, peças derivadas e aplicação consistente em vários formatos.',
   'Social media e criativos para anúncios — estático e motion — pensados para conversão e leitura rápida no feed.',
   'Criação e edição de imagem (Photoshop, IA generativa como acelerador) e edição de vídeo (DaVinci Resolve, CapCut).',
-  'Vídeos promocionais, apresentação de app/produto e cortes para campanha.',
+  'Produção audiovisual de ponta a ponta com IA: roteiro, narração, motion, demonstração de app/produto e versões para campanha.',
+  'Automação de marketing: planejamento, produção de conteúdo e filas de publicação com integrações específicas para cada canal.',
   'Sites e experiências web como este portfólio: narrativa visual, tipografia e microinterações alinhadas à marca.',
   'Visualização de dados e relatórios em Power BI quando o projeto pede storytelling com gráficos e identidade aplicada.',
 ];
@@ -45,7 +46,7 @@ export default function DesignAbout() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.9 }}
-            className="sticky top-28"
+            className="design-about-identity lg:sticky lg:top-28 self-start"
           >
             <h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tighter text-gray-950 leading-[1] mb-8">
               Design que<br />

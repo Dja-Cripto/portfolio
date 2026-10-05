@@ -12,6 +12,9 @@ const skills = [
   { name: 'Vídeo promocional', cat: 'Apresentação', bg: 'bg-amber-50 border-amber-200', text: 'text-amber-800' },
   { name: 'Power BI', cat: 'Visualização de dados', bg: 'bg-yellow-50 border-yellow-200', text: 'text-yellow-900' },
   { name: 'IA generativa', cat: 'Acelerador criativo', bg: 'bg-emerald-50 border-emerald-200', text: 'text-emerald-800' },
+  { name: 'Remotion', cat: 'Vídeo programático', bg: 'bg-blue-50 border-blue-200', text: 'text-blue-800' },
+  { name: 'Voz com IA', cat: 'Narração & efeitos', bg: 'bg-rose-50 border-rose-200', text: 'text-rose-800' },
+  { name: 'Automação de marketing', cat: 'Conteúdo & publicação', bg: 'bg-emerald-50 border-emerald-200', text: 'text-emerald-800' },
 ];
 
 export default function DesignSkills() {

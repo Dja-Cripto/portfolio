@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { ArrowRight, ArrowUpRight, Bot, CalendarDays, Check, Clapperboard, Gamepad2, Github, Layers3, Network, Share2, Sparkles, WandSparkles, X } from 'lucide-react';
 import ModalWrapper from './ModalWrapper';
+import PortfolioCase, { portfolioProjects } from './PortfolioCase';
 
 type Project = {
   title: string; eyebrow: string; description: string; fullDescription: string;
@@ -106,12 +107,14 @@ function FeaturedProject({ onOpen }: { onOpen: () => void }) {
 
 export default function Projects() {
   const [selected, setSelected] = useState<Project | null>(null);
+  const selectedPortfolio = portfolioProjects.find(project => project.title === selected?.title);
+  const projects: Project[] = [...portfolioProjects, curriculumDash];
   return (
     <section id="projects" className="projects-section"><div className="projects-inner">
       <header className="section-editorial-heading"><div><span className="terminal-kicker">// trabalhos selecionados</span><h2>Projetos que<br /><em>fazem o trabalho.</em></h2></div><p>Sistemas reais, automações e experiências digitais construídas da estratégia à entrega.</p></header>
       <FeaturedProject onOpen={() => setSelected(investolq)} />
-      <div className="secondary-projects"><motion.button type="button" onClick={() => setSelected(curriculumDash)} className="secondary-project" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}><div className="secondary-project-image"><img src={curriculumDash.coverImage} alt={curriculumDash.title} /><span>02</span></div><div className="secondary-project-copy"><span className="terminal-kicker">{curriculumDash.eyebrow}</span><h3>{curriculumDash.title}</h3><p>{curriculumDash.description}</p><div className="project-meta"><span>{curriculumDash.year}</span><span>{curriculumDash.scope}</span><ArrowUpRight /></div></div></motion.button>
+      <div className="secondary-projects portfolio-project-grid">{projects.map((project, index) => <motion.button key={project.title} type="button" onClick={() => setSelected(project)} className="secondary-project portfolio-project-card" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}><div className="secondary-project-image"><img src={project.coverImage} alt={`Apresentação do projeto ${project.title}`} loading="lazy" decoding="async" /><span>{String(index + 2).padStart(2, '0')}</span></div><div className="secondary-project-copy"><span className="terminal-kicker">{project.eyebrow}</span><h3>{project.title}</h3><p>{project.description}</p><div className="project-meta"><span>{project.year}</span><span>{project.scope}</span></div><span className="portfolio-card-action">Explorar o case <ArrowUpRight /></span></div></motion.button>)}
         <div className="manifesto-card"><Network /><span className="terminal-kicker">Próximo desafio</span><h3>Do problema ao produto — conectando código, dados e operação.</h3><a href="#contact">Iniciar um projeto <ArrowRight /></a></div></div>
-    </div><AnimatePresence>{selected?.title === investolq.title && <InvestolqCase onClose={() => setSelected(null)} />}{selected?.title === curriculumDash.title && <StandardCase project={curriculumDash} onClose={() => setSelected(null)} />}</AnimatePresence></section>
+    </div><AnimatePresence>{selected?.title === investolq.title && <InvestolqCase onClose={() => setSelected(null)} />}{selected?.title === curriculumDash.title && <StandardCase project={curriculumDash} onClose={() => setSelected(null)} />}{selectedPortfolio && <PortfolioCase project={selectedPortfolio} onClose={() => setSelected(null)} />}</AnimatePresence></section>
   );
 }

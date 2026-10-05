@@ -61,7 +61,7 @@ export default function DesignContact() {
           viewport={{ once: true }}
           className="text-xl text-gray-600 max-w-xl leading-relaxed font-light mb-16"
         >
-          Aberto para identidade, social/ads, vídeo, sites e relatórios visuais em Power BI quando o projeto pedir narrativa com dados. Escolha o canal que for mais rápido para você.
+          Aberto para identidade visual, campanhas, vídeos com IA, apresentação de aplicativos e automação de conteúdo. Também crio sites e relatórios visuais quando o projeto pede narrativa com dados. Escolha o canal que for mais rápido para você.
         </motion.p>
 
         {/* Buttons */}

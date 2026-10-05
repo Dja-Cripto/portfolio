@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ArrowUpRight, X, ArrowLeft, ArrowRight, ChevronRight } from 'lucide-react';
 import ModalWrapper from '../ModalWrapper';
+import DesignMarketing from './DesignMarketing';
 
 // ─── KAST CASE DATA ──────────────────────────────────────────────────────────
 const kastCase = {
@@ -413,9 +414,10 @@ export default function DesignProjects() {
         <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-orange-500 font-bold tracking-widest uppercase text-xs mb-6">Projetos Selecionados</motion.p>
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
           <h3 className="text-3xl sm:text-5xl md:text-7xl font-black text-gray-950 tracking-tighter leading-[1] uppercase">Selected<br /><span className="text-transparent" style={{ WebkitTextStroke: '2px #d1d5db' }}>Works.</span></h3>
-          <p className="text-gray-500 text-lg max-w-xs leading-relaxed font-light">Cases reais de branding, social media e direção criativa.</p>
+          <p className="text-gray-500 text-lg max-w-xs leading-relaxed font-light">Branding, campanhas com IA e sistemas que conectam criação à publicação.</p>
         </div>
 
+        <DesignMarketing />
         <FeaturedCaseCard project={kastCase} onClick={() => setKastOpen(true)} />
         <FeaturedCaseCard project={trapCase} onClick={() => setTrapOpen(true)} />
         <FeaturedCaseCard project={werateCase} onClick={() => setWerateOpen(true)} />
