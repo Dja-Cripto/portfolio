@@ -276,3 +276,27 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--acid); outline-
 .portfolio-marketing-intro{font-size:16px;line-height:1.9;color:#a8b3ad;margin:0 0 35px}
 @media(max-width:900px){.design-marketing-cards{grid-template-columns:1fr}.marketing-case-header{padding:60px 30px 35px}.marketing-case-body{padding:35px 30px}.marketing-media{gap:25px;grid-template-columns:minmax(200px,280px) minmax(0,1fr)}.marketing-system-detail{grid-template-columns:1fr}.marketing-film-tabs button{padding:12px}}
 @media(max-width:620px){.marketing-case-header{padding:65px 22px 30px}.marketing-case-header>p{font-size:15px}.marketing-case-body{padding:30px 20px}.marketing-case-stats{grid-template-columns:repeat(2,1fr);margin-bottom:40px}.marketing-case-stats strong{font-size:32px}.marketing-media{grid-template-columns:1fr;gap:30px}.marketing-player-wrap{width:min(100%,300px);margin:auto}.marketing-deliverables{grid-template-columns:1fr}.marketing-case-footer{flex-direction:column}.marketing-system-tabs{grid-template-columns:1fr}.marketing-system-tabs button{display:flex;justify-content:space-between;align-items:center;gap:8px}.marketing-system-tabs small{margin:0;text-align:right}.marketing-media-dark{padding:20px 14px}.design-marketing-card-copy{padding:22px}.design-marketing-card-copy>span{font-size:9px}.marketing-intro{margin-top:45px}}
+.design-ad-hero{position:relative;overflow:hidden;background:radial-gradient(ellipse at 85% 35%,#f5d6ea 0%,transparent 50%),linear-gradient(135deg,#fff0e8,#f9f2ef 55%,#ede7f6);color:#18181b}
+.design-ad-layout{max-width:1440px;margin:auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,390px);align-items:center;gap:70px;padding:145px 7% 65px;min-height:100svh}
+.design-ad-kicker{display:block;font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:#a84114;margin-bottom:28px}
+.design-ad-copy h1{font-size:clamp(56px,7vw,104px);line-height:.98;letter-spacing:-.065em;font-weight:900;margin:0 0 28px}
+.design-ad-copy h1 em{font-style:normal;color:#df4c25}
+.design-ad-copy>p{font-size:18px;line-height:1.8;color:#615762;max-width:530px;margin-bottom:30px}
+.design-ad-actions{display:flex;flex-wrap:wrap;align-items:center;gap:22px}
+.design-ad-primary{display:inline-flex;align-items:center;gap:12px;padding:18px 24px;border-radius:16px;background:#18181b;color:white;font-size:15px;font-weight:700;transition:background .2s,transform .2s}
+.design-ad-primary:hover{background:#c84320;transform:translateY(-2px)}
+.design-ad-secondary{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:14px;color:#5e4f61}
+.design-ad-services{display:flex;gap:10px;flex-wrap:wrap;margin-top:30px}
+.design-ad-services span{font-size:11px;border:1px solid #d9c9cf;padding:7px 11px;border-radius:30px;color:#6d5660}
+.design-ad-showcase{margin:0;min-width:0;width:100%;max-width:390px;justify-self:center}
+.design-ad-video-wrap{position:relative;aspect-ratio:9/16;border:6px solid #18181b;border-radius:28px;overflow:hidden;background:#111;box-shadow:0 25px 65px #68384a30}
+.design-ad-video-wrap video{display:block;width:100%;height:100%;object-fit:contain}
+.design-ad-play{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:10px;padding:28px 14px 40px;color:white;background:linear-gradient(transparent 35%,#000b);cursor:pointer;text-align:center}
+.design-ad-play>span{display:flex;align-items:center;justify-content:center;width:64px;height:64px;background:#fff;color:#18181b;border-radius:50%;margin-bottom:6px;transition:transform .2s}
+.design-ad-play:hover>span{transform:scale(1.08)}
+.design-ad-play strong{font-size:18px}.design-ad-play small{font-size:12px;color:#eee}
+.design-ad-showcase figcaption{display:flex;flex-direction:column;gap:5px;text-align:center;padding:18px 6px 0;font-size:12px;color:#796473}
+.design-ad-showcase figcaption strong{font-weight:500;color:#40333d}
+.design-ad-hero a:focus-visible,.design-ad-play:focus-visible{outline:3px solid #b23573;outline-offset:5px}
+@media(min-width:1000px) and (max-height:850px){.design-ad-showcase{max-width:300px}.design-ad-layout{padding-top:115px;gap:50px}}
+@media(max-width:800px){.design-ad-layout{grid-template-columns:1fr;gap:40px;padding:130px 24px 48px}.design-ad-copy h1{font-size:clamp(54px,11vw,82px)}.design-ad-copy>p{font-size:16px}.design-ad-showcase{max-width:340px}.design-ad-kicker{font-size:10px;line-height:1.8;margin-bottom:20px}.design-ad-actions{gap:20px}.design-ad-primary{padding:17px 20px}.design-ad-services{margin-top:24px}}
