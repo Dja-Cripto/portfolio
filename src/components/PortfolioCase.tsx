@@ -9,6 +9,7 @@ export type PortfolioProject = {
   features: { title: string; copy: string }[];
   workflow: string[]; gallery: { src: string; alt: string; caption: string }[];
   next: string; mobile?: boolean;
+  links?: { label: string; href: string }[];
 };
 
 export const portfolioProjects: PortfolioProject[] = [
@@ -66,24 +67,27 @@ export const portfolioProjects: PortfolioProject[] = [
     next: 'A evolução inclui ampliar os testes de busca, autenticação e prospecção e fortalecer a persistência e proteção das configurações sensíveis.',
   },
   {
-    title: 'Rebrotar', eyebrow: 'Livre App · Aplicativo mobile com IA',
-    description: 'Um aplicativo de apoio à mudança de hábitos, com diário, progresso, áudios guiados e conversas com a assistente Lia.',
-    fullDescription: 'O Rebrotar, inicialmente chamado Livre App, propõe um acompanhamento diário para quem deseja mudar a relação com apostas, pornografia ou excesso de celular. A experiência combina entrevista inicial, pequenos passos, diário, lições, áudios e registro de recomeços.\n\nA Lia conecta o aplicativo a um servidor de IA para conversas contextualizadas. A identidade visual usa tons de floresta e creme, tipografia editorial e um jardim como metáfora de progresso. É uma ferramenta de apoio; não substitui acompanhamento profissional.',
-    coverImage: '/projects/rebrotar-cover.webp', tech: ['React Native', 'Expo', 'Expo Router', 'TypeScript', 'AsyncStorage', 'Node.js', 'Cloud Run', 'Vertex AI'], year: '2026', scope: 'Produto mobile e experiência de uso',
-    headline: 'Pequenos passos. Um novo começo.', status: 'Protótipo mobile · assistente integrada à IA', mobile: true,
+    title: 'Rebrotar', eyebrow: 'Aplicativo Android · Publicado na Google Play',
+    description: 'App Android publicado na Google Play, com bloqueio de sites e apps, limite de tempo gradual, diário, áudios guiados e a assistente Lia.',
+    fullDescription: 'O Rebrotar ajuda quem quer largar apostas, pornografia e o excesso de celular, com acompanhamento diário e sem julgamento. Criei o app do zero, usando IA como parceira de desenvolvimento, e conduzi o processo até a Google Play: regras de produto, testes, política de privacidade, declaração de acessibilidade e revisão da loja.\n\nO bloqueio de sites e de apps usa um módulo nativo Android (Serviço de Acessibilidade), com as regras de decisão cobertas por testes automáticos. A Lia, coach de IA, conversa por um servidor no Google Cloud Run, avisa que não é psicóloga e indica o CVV (188) em situações de crise. Os dados do diário ficam cifrados no aparelho. É uma ferramenta de apoio e não substitui acompanhamento profissional.',
+    coverImage: '/projects/rebrotar-cover.webp', tech: ['React Native', 'Expo', 'TypeScript', 'Kotlin (módulo Android)', 'Google Cloud Run', 'Gemini'], year: '2026', scope: 'Produto mobile, publicado na Google Play',
+    headline: 'Pequenos passos. Um novo começo.', status: 'Publicado na Google Play · em evolução, mais de 30 versões', mobile: true,
+    links: [{ label: 'Baixar na Google Play', href: 'https://play.google.com/store/apps/details?id=app.rebrotar' }],
     challenge: 'Criar uma experiência acolhedora, simples e consistente para acompanhar hábitos e registrar momentos difíceis sem julgamento.',
     approach: 'Organizar a jornada em ações diárias, com conteúdo contextualizado, apoio conversacional e uma linguagem visual própria.',
     features: [
       { title: 'Jornada personalizada', copy: 'Entrevista inicial, escolha de foco, lições e acompanhamento do progresso.' },
       { title: 'Diário e recomeços', copy: 'Registro de situações, emoções e ações, com um fluxo específico para recaídas.' },
-      { title: 'Lia e áudios', copy: 'Assistente de IA integrada a um backend, respostas de reserva e conteúdos guiados em áudio.' },
-      { title: 'Experiência mobile', copy: 'Navegação por abas, identidade própria e demonstrações de limites, bloqueio e comunidade.' },
+      { title: 'Lia e áudios', copy: 'Coach de IA integrada a um servidor na nuvem, com detecção de crise e conteúdos guiados em áudio.' },
+      { title: 'Bloqueio e limites', copy: 'Bloqueio de sites de apostas e de conteúdo adulto e limite de tempo que desce aos poucos, com módulo nativo Android.' },
     ], workflow: ['Conhece a pessoa', 'Define pequenos passos', 'Acompanha o dia', 'Registra e recomeça'],
     gallery: [
-      { src: '/projects/rebrotar-home.webp', alt: 'Tela inicial do Rebrotar com progresso e acesso à Lia', caption: 'Início e progresso — dados de demonstração.' },
-      { src: '/projects/rebrotar-diary.webp', alt: 'Diário do aplicativo Rebrotar', caption: 'Diário — registro de emoções e situações.' },
-      { src: '/projects/rebrotar-lia.webp', alt: 'Tela de acolhimento do Rebrotar', caption: 'Acolhimento — exemplo da experiência de apoio.' },
-    ], next: 'Bloqueio nativo, medição de uso, cobrança, comunidade compartilhada e widget ainda são demonstrações. A próxima etapa inclui integrações nativas e proteção dos dados sensíveis.',
+      { src: '/projects/rebrotar-play-inicio.webp', alt: 'Tela inicial do Rebrotar com contador de dias e planta', caption: 'Início e progresso. Telas com dados de demonstração.' },
+      { src: '/projects/rebrotar-play-bloqueio.webp', alt: 'Tela de bloqueio do Rebrotar ao acessar um site de apostas', caption: 'Tela de bloqueio de um site de apostas.' },
+      { src: '/projects/rebrotar-play-limites.webp', alt: 'Tela de limites de tempo do Rebrotar', caption: 'Limite de tempo que desce aos poucos.' },
+      { src: '/projects/rebrotar-play-lia.webp', alt: 'Conversa com a Lia, coach de IA do Rebrotar', caption: 'Lia, coach de IA (tela de demonstração).' },
+      { src: '/projects/rebrotar-play-jardim.webp', alt: 'Jardim do Rebrotar, a planta que cresce com os dias firmes', caption: 'Jardim: a planta cresce com os dias firmes.' },
+    ], next: 'O app está na Google Play e segue em evolução. Os próximos passos são testar em mais modelos de aparelho, ativar o código ofuscado (R8) no build de release e ligar a assinatura Premium, que ainda está em preparação.',
   },
 ];
 
@@ -93,6 +97,7 @@ export default function PortfolioCase({ project, onClose }: { project: Portfolio
       <header className="case-hero compact-hero"><img src={project.coverImage} alt={`Apresentação do ${project.title}`} /><div className="case-hero-shade" /><div className="case-hero-copy"><span className="terminal-kicker">{project.eyebrow}</span><h2>{project.title}</h2></div></header>
       <div className="case-body">
         <p className="portfolio-status"><span />{project.status}</p>
+        {project.links && <div className="project-actions">{project.links.map(link => <a key={link.href} href={link.href} target="_blank" rel="noreferrer">{link.label} <ArrowRight /></a>)}</div>}
         <div className="case-intro-grid"><div><span className="terminal-kicker">Visão geral</span><h3>{project.headline}</h3></div><div className="case-prose">{project.fullDescription.split('\n\n').map(p => <p key={p}>{p}</p>)}</div></div>
         <section className="portfolio-context"><div><span className="terminal-kicker">O desafio</span><p>{project.challenge}</p></div><div><span className="terminal-kicker">A solução</span><p>{project.approach}</p></div></section>
         <section className="case-section"><div className="case-section-heading"><span className="terminal-kicker">Por dentro do produto</span><h3>O que conecta a ideia à execução.</h3></div><div className="engine-grid">{project.features.map((feature, i) => <div className="engine-card" key={feature.title}><span>0{i + 1}</span><h4>{feature.title}</h4><p>{feature.copy}</p></div>)}</div></section>

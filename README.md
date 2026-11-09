@@ -1,20 +1,18 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+﻿# Portfólio: Daniel de Jesus
 
-# Run and deploy your AI Studio app
+Portfólio de desenvolvedor júnior (ADS em andamento) com foco em IA aplicada, automação e produtos mobile.
+Projeto principal: Rebrotar, app Android publicado na Google Play.
 
-This contains everything you need to run your app locally.
+- Site: https://dja-portfolio.vercel.app
+- LinkedIn: https://www.linkedin.com/in/daniel-de-jesus-alves/
 
-View your app in AI Studio: https://ai.studio/apps/593651a3-81f1-4aee-88d0-c825ba226d3e
+## Rodar localmente
 
-## Run Locally
+Requisito: Node.js 18+.
 
-**Prerequisites:**  Node.js
+```bash
+npm install
+npm run dev
+```
 
-
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+O site usa React, TypeScript, Vite, Tailwind e Motion. Não há chaves de API no front-end.

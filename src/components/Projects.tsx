@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
-import { ArrowRight, ArrowUpRight, Bot, CalendarDays, Check, Clapperboard, Gamepad2, Github, Layers3, Network, Share2, Sparkles, WandSparkles, X } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Bot, CalendarDays, Check, Clapperboard, Gamepad2, Github, Layers3, Network, Share2, ShieldCheck, Smartphone, Sparkles, WandSparkles, X } from 'lucide-react';
 import ModalWrapper from './ModalWrapper';
 import PortfolioCase, { portfolioProjects } from './PortfolioCase';
 
@@ -12,11 +12,11 @@ type Project = {
 
 const investolq: Project = {
   title: 'Investolq Portal Studio',
-  eyebrow: 'Projeto principal · Automação de conteúdo com IA',
-  description: 'Uma central autônoma que pesquisa pautas financeiras, cria carrosséis e vídeos, agenda e publica — tudo a partir de um único painel.',
-  fullDescription: 'O Investolq transforma uma agenda semanal em uma operação completa de conteúdo. O usuário escolhe horários, formatos e, se quiser, um tema. A plataforma pesquisa notícias, seleciona a pauta com mais potencial, evita repetições, cria o roteiro e conduz a produção até a publicação.\n\nNão é apenas um agendador ou editor: é uma pequena central de produção autônoma. O projeto reúne dois produtos dentro do mesmo ecossistema — um motor para carrosséis, posts e Stories e outro para vídeos verticais programáticos com narração, animação e identidade visual.',
+  eyebrow: 'Automação de conteúdo com IA',
+  description: 'Uma central que pesquisa pautas financeiras e cria carrosséis e vídeos a partir de uma agenda semanal, com painel para acompanhar a produção.',
+  fullDescription: 'O Investolq transforma uma agenda semanal em uma operação completa de conteúdo. O usuário escolhe horários, formatos e, se quiser, um tema. A plataforma pesquisa notícias, seleciona a pauta com mais potencial, evita repetições, cria o roteiro e conduz a produção dos formatos escolhidos, com um painel para acompanhar o andamento e os erros.\n\nNão é apenas um agendador ou editor: é uma pequena central de produção autônoma. O projeto reúne dois produtos dentro do mesmo ecossistema — um motor para carrosséis, posts e Stories e outro para vídeos verticais programáticos com narração, animação e identidade visual.',
   coverImage: '/investolq-cover.png',
-  tech: ['n8n', 'Python', 'FastAPI', 'Remotion', 'React', 'TypeScript', 'FFmpeg', 'TTS', 'Next.js'],
+  tech: ['n8n', 'Python', 'FastAPI', 'Remotion', 'React', 'TypeScript', 'FFmpeg', 'TTS', 'Docker'],
   year: '2026', scope: 'Produto, automação e vídeo',
 };
 
@@ -33,10 +33,10 @@ const pipeline = [
   { icon: CalendarDays, label: 'Planeja', copy: 'Agenda, formato e tema' },
   { icon: Sparkles, label: 'Pesquisa', copy: 'Tendências e notícias' },
   { icon: WandSparkles, label: 'Produz', copy: 'Texto, imagem e vídeo' },
-  { icon: Share2, label: 'Publica', copy: 'Instagram e YouTube' },
+  { icon: Share2, label: 'Acompanha', copy: 'Painel, histórico e erros' },
 ];
 
-const capabilities = ['Agenda semanal de conteúdo', 'Pesquisa e seleção de pautas com IA', 'Histórico para evitar repetições', 'Roteiros, legendas e hashtags', 'Narração, música e efeitos sonoros', 'Publicação automática e logs'];
+const capabilities = ['Agenda semanal de conteúdo', 'Pesquisa e seleção de pautas com IA', 'Histórico para evitar repetições', 'Roteiros, legendas e hashtags', 'Narração, música e efeitos sonoros', 'Painel de acompanhamento, histórico e logs'];
 
 function InvestolqCase({ onClose }: { onClose: () => void }) {
   return (
@@ -96,23 +96,28 @@ function StandardCase({ project, onClose }: { project: Project; onClose: () => v
   );
 }
 
-function FeaturedProject({ onOpen }: { onOpen: () => void }) {
+function FeaturedProject({ project, onOpen }: { project: Project; onOpen: () => void }) {
+  const play = portfolioProjects.find(item => item.title === project.title)?.links?.[0];
   return (
-    <motion.button type="button" className="featured-project" onClick={onOpen} initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-80px' }} transition={{ duration: 0.8 }}>
-      <div className="featured-project-media"><img src={investolq.coverImage} alt="Investolq Portal Studio" /><div className="featured-orbit"><Bot /><span>AI</span></div></div>
-      <div className="featured-project-copy"><div className="project-index"><span>01</span><small>PROJETO PRINCIPAL</small></div><span className="terminal-kicker">{investolq.eyebrow}</span><h3>Investolq<br /><em>Portal Studio</em></h3><p>{investolq.description}</p><div className="dual-engine"><span><Layers3 /> Carousel Studio</span><span><Clapperboard /> Motion Studio</span></div><div className="view-case">Explorar o case <ArrowRight /></div></div>
-    </motion.button>
+    <div className="featured-project-wrap">
+      <motion.button type="button" className="featured-project" onClick={onOpen} initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-80px' }} transition={{ duration: 0.8 }}>
+        <div className="featured-project-media"><img src={project.coverImage} alt={`Apresentação do projeto ${project.title}`} /><div className="featured-orbit"><Smartphone /><span>APP</span></div></div>
+        <div className="featured-project-copy"><div className="project-index"><span>01</span><small>PROJETO PRINCIPAL</small></div><span className="terminal-kicker">{project.eyebrow}</span><h3>{project.title}<br /><em>na Google Play</em></h3><p>{project.description}</p><div className="dual-engine"><span><ShieldCheck /> Bloqueio nativo Android</span><span><Bot /> Lia, coach de IA</span></div><div className="view-case">Explorar o case <ArrowRight /></div></div>
+      </motion.button>
+      {play && <div className="project-actions featured-actions"><a href={play.href} target="_blank" rel="noreferrer">{play.label} <ArrowUpRight /></a></div>}
+    </div>
   );
 }
 
 export default function Projects() {
   const [selected, setSelected] = useState<Project | null>(null);
   const selectedPortfolio = portfolioProjects.find(project => project.title === selected?.title);
-  const projects: Project[] = [...portfolioProjects, curriculumDash];
+  const rebrotar = portfolioProjects.find(project => project.title === 'Rebrotar') as Project;
+  const projects: Project[] = [investolq, ...portfolioProjects.filter(project => project.title !== 'Rebrotar'), curriculumDash];
   return (
     <section id="projects" className="projects-section"><div className="projects-inner">
       <header className="section-editorial-heading"><div><span className="terminal-kicker">// trabalhos selecionados</span><h2>Projetos que<br /><em>fazem o trabalho.</em></h2></div><p>Sistemas reais, automações e experiências digitais construídas da estratégia à entrega.</p></header>
-      <FeaturedProject onOpen={() => setSelected(investolq)} />
+      <FeaturedProject project={rebrotar} onOpen={() => setSelected(rebrotar)} />
       <div className="secondary-projects portfolio-project-grid">{projects.map((project, index) => <motion.button key={project.title} type="button" onClick={() => setSelected(project)} className="secondary-project portfolio-project-card" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}><div className="secondary-project-image"><img src={project.coverImage} alt={`Apresentação do projeto ${project.title}`} loading="lazy" decoding="async" /><span>{String(index + 2).padStart(2, '0')}</span></div><div className="secondary-project-copy"><span className="terminal-kicker">{project.eyebrow}</span><h3>{project.title}</h3><p>{project.description}</p><div className="project-meta"><span>{project.year}</span><span>{project.scope}</span></div><span className="portfolio-card-action">Explorar o case <ArrowUpRight /></span></div></motion.button>)}
         <div className="manifesto-card"><Network /><span className="terminal-kicker">Próximo desafio</span><h3>Do problema ao produto — conectando código, dados e operação.</h3><a href="#contact">Iniciar um projeto <ArrowRight /></a></div></div>
     </div><AnimatePresence>{selected?.title === investolq.title && <InvestolqCase onClose={() => setSelected(null)} />}{selected?.title === curriculumDash.title && <StandardCase project={curriculumDash} onClose={() => setSelected(null)} />}{selectedPortfolio && <PortfolioCase project={selectedPortfolio} onClose={() => setSelected(null)} />}</AnimatePresence></section>

@@ -74,7 +74,7 @@ export default function Contact() {
                   </motion.a>
 
                   <motion.a
-                    href="https://www.linkedin.com/in/daniel-de-jesus-00ab442b5/"
+                    href="https://www.linkedin.com/in/daniel-de-jesus-alves/"
                     target="_blank"
                     rel="noopener noreferrer"
                     whileHover={{ scale: 1.02 }}

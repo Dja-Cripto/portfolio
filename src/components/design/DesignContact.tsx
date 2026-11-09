@@ -93,7 +93,7 @@ export default function DesignContact() {
           </a>
 
           <a
-            href="https://www.linkedin.com/in/daniel-de-jesus-00ab442b5/"
+            href="https://www.linkedin.com/in/daniel-de-jesus-alves/"
             target="_blank"
             rel="noopener noreferrer"
             className="group inline-flex items-center gap-3 px-8 py-5 rounded-2xl font-bold text-lg bg-white border border-gray-200 text-gray-900 hover:border-[#0077b5] hover:text-[#0077b5] transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
